@@ -1,6 +1,7 @@
 import Header from "@/components/header/Header";
 import "./globals.css";
 import { Nunito_Sans } from "next/font/google";
+import Menubar from "@/components/Menubar";
 
 const font = Nunito_Sans({ subsets: ["latin"] });
 
@@ -19,7 +20,9 @@ export default function RootLayout({
       <body className={font.className}>
         <Header />
 
-        <main className="w-screen h-screen pt-14 overflow-hidden">
+        <Menubar />
+
+        <main className="w-screen h-screen pt-14 md:px-28 overflow-hidden">
           {children}
         </main>
       </body>
