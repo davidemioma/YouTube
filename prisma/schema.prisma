@@ -1,0 +1,111 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+//npm i -D prisma
+//npx prisma init
+//npx prisma db push - to push to your database.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String? 
+  email String? @unique
+  emailVerified DateTime? 
+  image String?
+  description String?
+  category String
+  hashedPassword String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  subscribersIds String[]  @db.ObjectId
+  subscribedToIds String[]  @db.ObjectId
+
+  likedPostIds String[] @db.ObjectId
+  likedPosts Post[] @relation("liked", fields: [likedPostIds], references: [id])
+
+  dislikedPostIds String[] @db.ObjectId
+  dislikedPosts Post[] @relation("disliked", fields: [dislikedPostIds], references: [id])
+
+  seenPostIds String[] @db.ObjectId
+  seenPosts Post[] @relation("Seen", fields: [seenPostIds], references: [id])
+
+  watchLaterPostIds String[] @db.ObjectId
+  watchLaterPosts Post[] @relation("Watch later", fields: [watchLaterPostIds], references: [id])
+ 
+  accounts Account[]
+  posts Post[]
+  comments Comment[]
+  notifications Notification[]
+}
+
+model Account {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  type String
+  provider String
+  providerAccountId String
+  refresh_token String? @db.String
+  access_token String? @db.String
+  expires_at Int?
+  token_type String?
+  scope String?
+  id_token String? @db.String
+  session_state String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Post {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title String
+  category String
+  photoUrl String
+  videoUrl String
+  description String
+  userId String @db.ObjectId
+  seenIds String[] @db.ObjectId
+  savedIds String[] @db.ObjectId
+  likedIds String[] @db.ObjectId
+  dislikedIds String[] @db.ObjectId
+  createdAt DateTime @default(now())
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  seen User[] @relation("Seen", fields: [seenIds], references: [id])
+  saved User[] @relation("Watch later", fields: [savedIds], references: [id])
+  liked User[] @relation("liked", fields: [likedIds], references: [id])
+  disliked User[] @relation("disliked", fields: [dislikedIds], references: [id])
+
+  comments Comment[]
+  notifications Notification[]
+}
+
+model Comment {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  comment String
+  userId String @db.ObjectId
+  postId String @db.ObjectId
+  createdAt DateTime @default(now())
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Notification {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  toId String @db.ObjectId
+  postId String @db.ObjectId
+  createdAt DateTime @default(now())
+ 
+  user User @relation(fields: [toId], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
