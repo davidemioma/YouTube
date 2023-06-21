@@ -6,16 +6,19 @@ import Image from "next/image";
 interface Props {
   imgSrc?: string;
   onClick?: () => void;
+  small?: boolean;
 }
 
-const Avatar = ({ imgSrc, onClick }: Props) => {
+const Avatar = ({ imgSrc, onClick, small }: Props) => {
   const onClickHandler = () => {
     if (onClick) return onClick();
   };
 
   return (
     <div
-      className="relative w-8 h-8 rounded-full overflow-hidden cursor-pointer"
+      className={`relative ${
+        small ? "h-6 w-6" : "w-8 h-8"
+      } rounded-full overflow-hidden cursor-pointer`}
       onClick={onClickHandler}
     >
       <Image

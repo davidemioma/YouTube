@@ -38,7 +38,7 @@ const Menubar = () => {
     },
   ];
   return (
-    <div className="hidden md:block fixed top-14 z-30 h-full bg-black w-28">
+    <div className="hidden md:block xl:hidden fixed top-14 z-30 h-full bg-black w-28">
       <div className="w-full flex flex-col pl-1 pr-8">
         {menuItems.map((item) => (
           <Link key={item.label} href={item.href}>

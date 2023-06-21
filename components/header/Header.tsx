@@ -8,10 +8,13 @@ import { BsArrowLeft } from "react-icons/bs";
 import { RiVideoAddLine } from "react-icons/ri";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
+import useSideModal from "@/hooks/useSideModal";
 import { IoMdNotificationsOutline } from "react-icons/Io";
 
 const Header = () => {
   const currentUser = null;
+
+  const sideModal = useSideModal();
 
   const [showSearch, setShowSearch] = useState(false);
 
@@ -23,7 +26,10 @@ const Header = () => {
             showSearch ? "hidden md:flex" : "flex"
           } flex items-center gap-3`}
         >
-          <IconButton Icon={RxHamburgerMenu} onClick={() => {}} />
+          <IconButton
+            Icon={RxHamburgerMenu}
+            onClick={() => sideModal.onOpen()}
+          />
 
           <FaYoutube size={30} color="red" />
         </div>
