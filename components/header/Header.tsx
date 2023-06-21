@@ -10,13 +10,20 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import useSideModal from "@/hooks/useSideModal";
 import { IoMdNotificationsOutline } from "react-icons/Io";
+import useLoginModal from "@/hooks/useLoginModal";
 
 const Header = () => {
   const currentUser = null;
 
   const sideModal = useSideModal();
 
+  const loginModal = useLoginModal();
+
   const [showSearch, setShowSearch] = useState(false);
+
+  const onOpenPostModal = () => {
+    if (!currentUser) return loginModal.onOpen();
+  };
 
   return (
     <header className="fixed top-0 w-screen h-14 z-30 bg-black">
@@ -71,7 +78,7 @@ const Header = () => {
             />
           </div>
 
-          <IconButton Icon={RiVideoAddLine} onClick={() => {}} />
+          <IconButton Icon={RiVideoAddLine} onClick={onOpenPostModal} />
 
           <IconButton Icon={IoMdNotificationsOutline} />
 
@@ -81,7 +88,7 @@ const Header = () => {
             ) : (
               <button
                 className="px-2 py-0.5 text-blue-500 text-sm md:text-base border border-blue-500"
-                onClick={() => {}}
+                onClick={() => loginModal.onOpen()}
               >
                 Sign In
               </button>

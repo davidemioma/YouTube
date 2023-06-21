@@ -1,18 +1,24 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 import {
   MdSubscriptions,
   MdOutlineSubscriptions,
   MdVideoLibrary,
   MdOutlineVideoLibrary,
 } from "react-icons/md";
+import useLoginModal from "@/hooks/useLoginModal";
+import { usePathname, useRouter } from "next/navigation";
+import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 
 const Menubar = () => {
+  const currentUser = null;
+
+  const router = useRouter();
+
   const pathname = usePathname();
+
+  const loginModal = useLoginModal();
 
   const menuItems = [
     {
@@ -37,21 +43,34 @@ const Menubar = () => {
       href: "/library",
     },
   ];
+
+  const handleClick = (href: string) => {
+    if (href === "/") {
+      router.push(href);
+    } else if (href !== "/" && !currentUser) {
+      return loginModal.onOpen();
+    } else {
+      router.push(href);
+    }
+  };
+
   return (
     <div className="hidden md:block xl:hidden fixed top-14 z-30 h-full bg-black w-28">
       <div className="w-full flex flex-col pl-1 pr-8">
         {menuItems.map((item) => (
-          <Link key={item.label} href={item.href}>
-            <div className="flex flex-col gap-1.5 items-center py-4 rounded-lg hover:bg-[hsl(0,0%,18.82%)] transition">
-              {item.active ? (
-                <item.activeIcon size={20} />
-              ) : (
-                <item.icon size={20} />
-              )}
+          <div
+            key={item.label}
+            className="flex flex-col gap-1.5 items-center py-4 rounded-lg hover:bg-[hsl(0,0%,18.82%)] transition"
+            onClick={() => handleClick(item.href)}
+          >
+            {item.active ? (
+              <item.activeIcon size={20} />
+            ) : (
+              <item.icon size={20} />
+            )}
 
-              <p className="text-xs">{item.label}</p>
-            </div>
-          </Link>
+            <p className="text-xs">{item.label}</p>
+          </div>
         ))}
       </div>
     </div>
