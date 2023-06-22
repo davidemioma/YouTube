@@ -17,7 +17,7 @@ const Button = ({ type, label, disabled, onClick }: Props) => {
   return (
     <button
       type={type}
-      className="bg-gray-50 text-black font-semibold py-2 rounded-lg opacity-70 disabled:opacity-70 hover:opacity-100 disabled:cursor-not-allowed transition"
+      className="w-full bg-gray-50 text-black font-semibold py-2 rounded-lg opacity-70 disabled:opacity-70 hover:opacity-100 disabled:cursor-not-allowed transition"
       disabled={disabled}
       onClick={onClickHandler}
     >

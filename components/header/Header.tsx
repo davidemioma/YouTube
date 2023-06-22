@@ -12,6 +12,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import useSideModal from "@/hooks/useSideModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import { IoMdNotificationsOutline } from "react-icons/Io";
+import useAddPostModal from "@/hooks/useAddPostModal";
 
 interface Props {
   currentUser: CurrentUser | null;
@@ -22,10 +23,14 @@ const Header = ({ currentUser }: Props) => {
 
   const loginModal = useLoginModal();
 
+  const addPostModal = useAddPostModal();
+
   const [showSearch, setShowSearch] = useState(false);
 
   const onOpenPostModal = () => {
     if (!currentUser) return loginModal.onOpen();
+
+    addPostModal.onOpen();
   };
 
   return (

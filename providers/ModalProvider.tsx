@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Register from "@/components/modal/Register";
 import Login from "@/components/modal/Login";
+import AddPost from "@/components/modal/AddPost";
 
 const ModalProvider = () => {
   const [isMounted, setIsMounted] = useState(false);
@@ -18,6 +19,8 @@ const ModalProvider = () => {
       <Register />
 
       <Login />
+
+      <AddPost />
     </>
   );
 };
