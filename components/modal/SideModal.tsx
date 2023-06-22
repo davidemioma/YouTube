@@ -6,8 +6,13 @@ import { FaYoutube } from "react-icons/fa";
 import IconButton from "../header/IconButton";
 import useSideModal from "@/hooks/useSideModal";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { CurrentUser } from "@/types";
 
-const SideModal = () => {
+interface Props {
+  currentUser: CurrentUser | null;
+}
+
+const SideModal = ({ currentUser }: Props) => {
   const sideModal = useSideModal();
 
   const [showModal, setShowModal] = useState(sideModal.isOpen);
@@ -44,7 +49,7 @@ const SideModal = () => {
           <FaYoutube size={30} color="red" />
         </div>
 
-        <Sidebar />
+        <Sidebar currentUser={currentUser} />
       </div>
     </>
   );

@@ -13,6 +13,7 @@ import useSideModal from "@/hooks/useSideModal";
 import useLoginModal from "@/hooks/useLoginModal";
 import { IoMdNotificationsOutline } from "react-icons/Io";
 import useAddPostModal from "@/hooks/useAddPostModal";
+import useProfileModal from "@/hooks/useProfileModal";
 
 interface Props {
   currentUser: CurrentUser | null;
@@ -24,6 +25,8 @@ const Header = ({ currentUser }: Props) => {
   const loginModal = useLoginModal();
 
   const addPostModal = useAddPostModal();
+
+  const profileModal = useProfileModal();
 
   const [showSearch, setShowSearch] = useState(false);
 
@@ -92,7 +95,10 @@ const Header = ({ currentUser }: Props) => {
 
           <div className="ml-1">
             {currentUser ? (
-              <Avatar imgSrc={currentUser?.image!} />
+              <Avatar
+                imgSrc={currentUser?.image!}
+                onClick={() => profileModal.toggle()}
+              />
             ) : (
               <button
                 className="px-2 py-0.5 text-blue-500 text-sm md:text-base border border-blue-500"

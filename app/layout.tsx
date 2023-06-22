@@ -7,6 +7,7 @@ import SideModal from "@/components/modal/SideModal";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import { getCurrentUser } from "./actions/getCurrentUser";
+import Container from "@/components/Container";
 
 const font = Nunito_Sans({ subsets: ["latin"] });
 
@@ -30,21 +31,23 @@ export default async function RootLayout({
       <body className={font.className}>
         <ToasterProvider />
 
-        <Header currentUser={currentUser} />
+        <Container>
+          <Header currentUser={currentUser} />
 
-        <Menubar currentUser={currentUser} />
+          <Menubar currentUser={currentUser} />
 
-        <SideModal />
+          <SideModal currentUser={currentUser} />
 
-        <div className="hidden xl:block fixed top-14 h-screen w-[250px] overflow-y-auto">
-          <Sidebar currentUser={currentUser} />
-        </div>
+          <div className="hidden xl:block fixed top-14 h-screen w-[250px] overflow-y-auto">
+            <Sidebar currentUser={currentUser} />
+          </div>
 
-        <ModalProvider />
+          <ModalProvider currentUser={currentUser} />
 
-        <main className="w-screen h-screen pt-14 md:pl-28 xl:pl-[250px] overflow-hidden">
-          {children}
-        </main>
+          <main className="w-screen h-screen pt-14 md:pl-28 xl:pl-[250px] overflow-hidden">
+            {children}
+          </main>
+        </Container>
       </body>
     </html>
   );
