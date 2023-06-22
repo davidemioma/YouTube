@@ -1,16 +1,18 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import axios from "axios";
 import Modal from "./Modal";
 import Image from "next/image";
 import Input from "../inputs/Input";
+import Button from "../inputs/Button";
+import { toast } from "react-hot-toast";
 import TextArea from "../inputs/TextArea";
-import { uploadFile } from "@/util/helpers";
 import { AiFillCamera } from "react-icons/ai";
 import useLoginModal from "@/hooks/useLoginModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
+import { uploadFile, getFileUrl } from "@/util/helpers";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import Button from "../inputs/Button";
 
 const Register = () => {
   const loginModal = useLoginModal();
@@ -26,6 +28,7 @@ const Register = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
@@ -46,7 +49,30 @@ const Register = () => {
     uploadFile(e, setImgFile);
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {};
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    setLoading(true);
+
+    const image = await getFileUrl(imgFile, `users/images/${data.email}`);
+
+    axios
+      .post("/api/register", {
+        ...data,
+        image,
+      })
+      .then(() => {
+        toast.success("Registration successful");
+
+        reset();
+
+        setImgFile(null);
+
+        registerModal.onClose();
+
+        loginModal.onOpen();
+      })
+      .catch(() => toast.error("Something went wrong!"))
+      .finally(() => setLoading(false));
+  };
 
   return (
     <Modal
@@ -57,7 +83,14 @@ const Register = () => {
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="w-full flex items-center justify-center">
-          <div className="group relative w-16 h-16 rounded-full overflow-hidden cursor-pointer">
+          <div
+            className="group relative w-16 h-16 rounded-full overflow-hidden cursor-pointer"
+            onClick={
+              !imgFile
+                ? () => imgPickerRef?.current?.click()
+                : () => setImgFile(null)
+            }
+          >
             <Image
               className="object-cover"
               src={imgFile || "/assets/no-profile.jpeg"}
@@ -118,7 +151,6 @@ const Register = () => {
           disabled={loading}
           register={register}
           errors={errors}
-          required
         />
 
         <Button type="submit" label="Create an account" disabled={loading} />

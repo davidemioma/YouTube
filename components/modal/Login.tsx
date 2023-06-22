@@ -1,14 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
+import axios from "axios";
 import Modal from "./Modal";
 import Input from "../inputs/Input";
+import Button from "../inputs/Button";
+import { toast } from "react-hot-toast";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import useLoginModal from "@/hooks/useLoginModal";
 import useRegisterModal from "@/hooks/useRegisterModal";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import Button from "../inputs/Button";
 
 const Login = () => {
+  const router = useRouter();
+
   const loginModal = useLoginModal();
 
   const registerModal = useRegisterModal();
@@ -18,6 +24,7 @@ const Login = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
@@ -32,7 +39,31 @@ const Login = () => {
     registerModal.onOpen();
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = (data) => {};
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    setLoading(true);
+
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    })
+      .then((callback) => {
+        if (callback?.error) {
+          toast.error("Invalid credentials!");
+        }
+
+        if (callback?.ok && !callback?.error) {
+          toast.success("Login successful");
+
+          reset();
+
+          loginModal.onClose();
+
+          router.refresh();
+        }
+      })
+      .catch(() => toast.error("Something went wrong!"))
+      .finally(() => setLoading(false));
+  };
 
   return (
     <Modal

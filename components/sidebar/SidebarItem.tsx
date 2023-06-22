@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { CurrentUser } from "@/types";
 import { IconType } from "react-icons";
 import { useRouter } from "next/navigation";
 import useLoginModal from "@/hooks/useLoginModal";
@@ -13,11 +13,17 @@ interface Props {
   Icon: IconType;
   active: boolean;
   ActiveIcon: IconType;
+  currentUser: CurrentUser | null;
 }
 
-const SidebarItem = ({ label, href, Icon, active, ActiveIcon }: Props) => {
-  const currentUser = null;
-
+const SidebarItem = ({
+  label,
+  href,
+  Icon,
+  active,
+  ActiveIcon,
+  currentUser,
+}: Props) => {
   const router = useRouter();
 
   const sideModal = useSideModal();

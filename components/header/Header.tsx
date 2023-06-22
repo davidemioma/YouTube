@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Avatar from "../Avatar";
+import { CurrentUser } from "@/types";
 import IconButton from "./IconButton";
 import { FaYoutube } from "react-icons/fa";
 import { BsArrowLeft } from "react-icons/bs";
@@ -9,12 +10,14 @@ import { RiVideoAddLine } from "react-icons/ri";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import useSideModal from "@/hooks/useSideModal";
-import { IoMdNotificationsOutline } from "react-icons/Io";
 import useLoginModal from "@/hooks/useLoginModal";
+import { IoMdNotificationsOutline } from "react-icons/Io";
 
-const Header = () => {
-  const currentUser = null;
+interface Props {
+  currentUser: CurrentUser | null;
+}
 
+const Header = ({ currentUser }: Props) => {
   const sideModal = useSideModal();
 
   const loginModal = useLoginModal();
@@ -84,7 +87,7 @@ const Header = () => {
 
           <div className="ml-1">
             {currentUser ? (
-              <Avatar />
+              <Avatar imgSrc={currentUser?.image!} />
             ) : (
               <button
                 className="px-2 py-0.5 text-blue-500 text-sm md:text-base border border-blue-500"

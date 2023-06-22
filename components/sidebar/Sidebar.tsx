@@ -19,8 +19,13 @@ import {
 import SubItem from "./SubItem";
 import SidebarItem from "./SidebarItem";
 import { usePathname } from "next/navigation";
+import { CurrentUser } from "@/types";
 
-const Sidebar = () => {
+interface Props {
+  currentUser: CurrentUser | null;
+}
+
+const Sidebar = ({ currentUser }: Props) => {
   const pathname = usePathname();
 
   return (
@@ -32,6 +37,7 @@ const Sidebar = () => {
           active={pathname === "/"}
           Icon={AiOutlineHome}
           ActiveIcon={AiFillHome}
+          currentUser={currentUser}
         />
 
         <SidebarItem
@@ -40,6 +46,7 @@ const Sidebar = () => {
           active={pathname === "/subscriptions"}
           Icon={MdOutlineVideoLibrary}
           ActiveIcon={MdSubscriptions}
+          currentUser={currentUser}
         />
       </div>
 
@@ -50,6 +57,7 @@ const Sidebar = () => {
           active={pathname === "/library"}
           Icon={MdOutlineSubscriptions}
           ActiveIcon={MdVideoLibrary}
+          currentUser={currentUser}
         />
 
         <SidebarItem
@@ -58,6 +66,7 @@ const Sidebar = () => {
           active={pathname === "/history"}
           Icon={AiOutlineHistory}
           ActiveIcon={AiOutlineHistory}
+          currentUser={currentUser}
         />
 
         <SidebarItem
@@ -66,6 +75,7 @@ const Sidebar = () => {
           active={pathname === "/watch-later"}
           Icon={AiOutlineClockCircle}
           ActiveIcon={AiFillClockCircle}
+          currentUser={currentUser}
         />
 
         <SidebarItem
@@ -74,6 +84,7 @@ const Sidebar = () => {
           active={pathname === "/liked-videos"}
           Icon={AiOutlineLike}
           ActiveIcon={AiFillLike}
+          currentUser={currentUser}
         />
       </div>
 

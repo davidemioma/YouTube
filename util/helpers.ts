@@ -13,10 +13,12 @@ export const uploadFile = (e: React.FormEvent, setSelectedFile: any) => {
   };
 };
 
-export const getFileUrl = async (SelectedFile: any, path: string) => {
+export const getFileUrl = async (selectedFile: any, path: string) => {
+  if (!selectedFile) return "";
+
   const curRef = ref(storage, path);
 
-  const url = await uploadString(curRef, SelectedFile, "data_url").then(
+  const url = await uploadString(curRef, selectedFile, "data_url").then(
     async (snapshot) => {
       const downloadUrl = await getDownloadURL(curRef);
 

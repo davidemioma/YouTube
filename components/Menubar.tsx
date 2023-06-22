@@ -7,13 +7,16 @@ import {
   MdVideoLibrary,
   MdOutlineVideoLibrary,
 } from "react-icons/md";
+import { CurrentUser } from "@/types";
 import useLoginModal from "@/hooks/useLoginModal";
 import { usePathname, useRouter } from "next/navigation";
 import { AiFillHome, AiOutlineHome } from "react-icons/ai";
 
-const Menubar = () => {
-  const currentUser = null;
+interface Props {
+  currentUser: CurrentUser | null;
+}
 
+const Menubar = ({ currentUser }: Props) => {
   const router = useRouter();
 
   const pathname = usePathname();
@@ -55,7 +58,7 @@ const Menubar = () => {
   };
 
   return (
-    <div className="hidden md:block xl:hidden fixed top-14 z-30 h-full bg-black w-28">
+    <div className="hidden md:block xl:hidden fixed top-14 z-30 h-full bg-black w-28 cursor-pointer">
       <div className="w-full flex flex-col pl-1 pr-8">
         {menuItems.map((item) => (
           <div
