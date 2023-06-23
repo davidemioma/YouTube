@@ -1,14 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import Avatar from "../Avatar";
 import Image from "next/image";
+import Avatar from "../Avatar";
 import Moment from "react-moment";
-import WatchLater from "../modal/WatchLater";
 import { useRouter } from "next/navigation";
+import WatchLater from "../modal/WatchLater";
 import { RxDotsVertical } from "react-icons/rx";
-import { numberFormatter } from "@/util/helpers";
 import { CurrentUser, PostProps } from "@/types";
+import { numberFormatter } from "@/util/helpers";
 import useWatchLater from "@/hooks/useWatchLater";
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
   currentUser: CurrentUser | null;
 }
 
-const Post = ({ post, currentUser }: Props) => {
+const SearchedPost = ({ post, currentUser }: Props) => {
   const router = useRouter();
 
   const [show, setShow] = useState(false);
@@ -32,11 +32,11 @@ const Post = ({ post, currentUser }: Props) => {
 
   return (
     <div
-      className="group w-full max-w-sm md:w-full h-[300px] flex flex-col cursor-pointer"
+      className="group flex flex-col md:flex-row gap-5 cursor-pointer"
       onClick={() => show && setShow(false)}
     >
       <div
-        className="relative bg-[hsl(0,0%,18.82%)] w-full h-48 rounded-lg overflow-hidden"
+        className="relative w-full md:max-w-xs h-48 overflow-hidden rounded-lg"
         onClick={onClickHandler}
       >
         <Image
@@ -47,28 +47,31 @@ const Post = ({ post, currentUser }: Props) => {
         />
       </div>
 
-      <div className="relative flex items-start justify-between gap-3 py-3">
-        <div className="flex-1 flex items-start gap-3">
-          <Avatar
-            imgSrc={post.user?.image!}
-            onClick={() => router.push(`/channel/${post.user?.id}`)}
-          />
+      <div className="relative flex-1 flex items-start justify-between">
+        <div className="flex flex-col" onClick={onClickHandler}>
+          <span className="font-semibold line-clamp-2 md:line-clamp-1">
+            {post.title}
+          </span>
 
-          <div
-            className="flex-1 flex flex-col gap-0.5"
-            onClick={onClickHandler}
-          >
-            <span className="font-semibold line-clamp-2">{post.title}</span>
+          <span className="text-sm font-semibold text-gray-50/70 hover:text-white">
+            {numberFormatter(post.seenIds.length)} views .{" "}
+            {<Moment fromNow date={new Date(post.createdAt).toUTCString()} />}
+          </span>
+
+          <div className="flex items-center gap-3 py-3">
+            <Avatar
+              imgSrc={post.user?.image!}
+              onClick={() => router.push(`/channel/${post.user?.id}`)}
+            />
 
             <span className="text-sm font-semibold text-gray-50/70 hover:text-white">
               {post.user?.name}
             </span>
-
-            <span className="text-sm font-semibold text-gray-50/70 hover:text-white">
-              {numberFormatter(post.seenIds.length)} views .{" "}
-              {<Moment fromNow date={new Date(post.createdAt).toUTCString()} />}
-            </span>
           </div>
+
+          <span className="text-sm text-gray-50/70 line-clamp-2 md:line-clamp-1">
+            {post.description}
+          </span>
         </div>
 
         <RxDotsVertical
@@ -89,4 +92,4 @@ const Post = ({ post, currentUser }: Props) => {
   );
 };
 
-export default Post;
+export default SearchedPost;

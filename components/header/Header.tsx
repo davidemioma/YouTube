@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import qs from "query-string";
 import Avatar from "../Avatar";
 import { CurrentUser } from "@/types";
 import IconButton from "./IconButton";
@@ -11,15 +12,18 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import useSideModal from "@/hooks/useSideModal";
 import useLoginModal from "@/hooks/useLoginModal";
-import { IoMdNotificationsOutline } from "react-icons/Io";
+import { useRouter } from "next/navigation";
 import useAddPostModal from "@/hooks/useAddPostModal";
 import useProfileModal from "@/hooks/useProfileModal";
+import { IoMdNotificationsOutline, IoMdClose } from "react-icons/Io";
 
 interface Props {
   currentUser: CurrentUser | null;
 }
 
 const Header = ({ currentUser }: Props) => {
+  const router = useRouter();
+
   const sideModal = useSideModal();
 
   const loginModal = useLoginModal();
@@ -30,10 +34,29 @@ const Header = ({ currentUser }: Props) => {
 
   const [showSearch, setShowSearch] = useState(false);
 
+  const [searchValue, setSearchValue] = useState("");
+
   const onOpenPostModal = () => {
     if (!currentUser) return loginModal.onOpen();
 
     addPostModal.onOpen();
+  };
+
+  const onSearchHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!searchValue.trim()) return;
+
+    const query = {
+      search_query: searchValue,
+    };
+
+    const url = qs.stringifyUrl({
+      url: "/results",
+      query,
+    });
+
+    router.push(url);
   };
 
   return (
@@ -61,21 +84,33 @@ const Header = ({ currentUser }: Props) => {
           </div>
         )}
 
-        <div
+        <form
+          onSubmit={onSearchHandler}
           className={`${
             showSearch ? "flex" : "hidden md:flex"
           } flex-1 md:flex items-center w-full max-w-lg mx-auto overflow-hidden`}
         >
-          <input
-            className="bg-[hsl(0,0%,7%)] flex-1 px-5 h-9 border border-[hsl(0,0%,18.82%)] rounded-l-full focus:outline-none focus:border-blue-500"
-            type="text"
-            placeholder="Search"
-          />
+          <div className="bg-[hsl(0,0%,7%)] flex-1 flex items-center gap-3 h-9 px-2 border border-[hsl(0,0%,18.82%)] rounded-l-full">
+            <input
+              className="bg-transparent h-full px-2 flex-1 focus:outline-none focus:border-blue-500"
+              value={searchValue}
+              type="text"
+              placeholder="Search"
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
 
-          <button className="bg-[hsl(0,0%,18.82%)] h-9 flex items-center justify-center px-4 rounded-r-full">
+            {searchValue.trim() && (
+              <IoMdClose size={23} onClick={() => setSearchValue("")} />
+            )}
+          </div>
+
+          <button
+            type="submit"
+            className="bg-[hsl(0,0%,18.82%)] h-9 flex items-center justify-center px-4 rounded-r-full"
+          >
             <AiOutlineSearch size={23} />
           </button>
-        </div>
+        </form>
 
         <div
           className={`${
