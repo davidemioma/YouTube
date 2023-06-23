@@ -7,6 +7,22 @@ import { BiMoviePlay, BiBulb } from "react-icons/bi";
 import { IoGameControllerOutline } from "react-icons/io5";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
+export const numberFormatter = (num: number) => {
+  let newNumber = "";
+
+  if (num >= 1000000000) {
+    newNumber = (num / 1000000000).toFixed(1) + "B";
+  } else if (num >= 1000000) {
+    newNumber = (num / 1000000).toFixed(1) + "M";
+  } else if (num >= 1000) {
+    newNumber = (num / 1000).toFixed(1) + "K";
+  } else {
+    newNumber = `${num}`;
+  }
+
+  return newNumber;
+};
+
 export const uploadFile = (e: React.FormEvent, setSelectedFile: any) => {
   const reader = new FileReader();
 

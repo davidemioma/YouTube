@@ -5,3 +5,7 @@ export type CurrentUser = User & {
   likedPosts: Post[];
   watchLaterPosts: Post[];
 };
+
+export type PostProps = Post & {
+  user: User;
+};
