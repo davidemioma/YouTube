@@ -9,7 +9,7 @@ interface Props {
 
 const Empty = ({ label }: Props) => {
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+    <div className="w-full h-[70vh] flex flex-col items-center justify-center gap-2">
       <div className="relative w-40 h-40 overflow-hidden">
         <Image
           className="object-cover"
