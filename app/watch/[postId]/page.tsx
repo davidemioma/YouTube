@@ -1,6 +1,7 @@
+import WatchContent from "./components/WatchContent";
 import { getPostById } from "@/app/actions/getPostById";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
-import WatchContent from "./components/WatchContent";
+import { getRelatedPosts } from "@/app/actions/getRelatedPosts";
 
 interface Params {
   postId: string;
@@ -9,9 +10,17 @@ interface Params {
 export default async function Watch({ params }: { params: Params }) {
   const { postId } = params;
 
-  const post = await getPostById(postId as string);
-
   const currentUser = await getCurrentUser();
 
-  return <WatchContent currentUser={currentUser} post={post} />;
+  const post = await getPostById(postId as string);
+
+  const relatedPosts = await getRelatedPosts(postId as string);
+
+  return (
+    <WatchContent
+      currentUser={currentUser}
+      post={post}
+      relatedPosts={relatedPosts}
+    />
+  );
 }

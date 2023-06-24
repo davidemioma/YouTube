@@ -3,10 +3,13 @@
 import React, { useState } from "react";
 import Moment from "react-moment";
 import useLike from "@/hooks/useLike";
+import InfoModal from "./InfoModal";
 import Avatar from "@/components/Avatar";
 import { useRouter } from "next/navigation";
 import useSubscribe from "@/hooks/useSubscribe";
 import { numberFormatter } from "@/util/helpers";
+import useInfoModal from "@/hooks/useInfoModal";
+import useWatchLater from "@/hooks/useWatchLater";
 import { CurrentUser, PostDetails } from "@/types";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
@@ -22,10 +25,13 @@ const PostInfo = ({ post, currentUser }: Props) => {
 
   const [showMore, setShowMore] = useState(false);
 
-  const { loading, hasSubscribed, handleSubscribe } = useSubscribe({
-    currentUser,
-    userId: post?.user?.id!,
-  });
+  const infoModal = useInfoModal();
+
+  const {
+    loading: saving,
+    hasAdded,
+    handleWatchLater,
+  } = useWatchLater(currentUser, post?.id!);
 
   const {
     loading: isLoading,
@@ -34,6 +40,11 @@ const PostInfo = ({ post, currentUser }: Props) => {
     handleLike,
     handleDislike,
   } = useLike({ currentUser, postId: post?.id! });
+
+  const { loading, hasSubscribed, handleSubscribe } = useSubscribe({
+    currentUser,
+    userId: post?.user?.id!,
+  });
 
   return (
     <div className="w-full">
@@ -69,7 +80,7 @@ const PostInfo = ({ post, currentUser }: Props) => {
           )}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="relative flex items-center gap-3">
           <div className="bg-[hsl(0,0%,18.82%)] w-[134px] flex items-center rounded-full overflow-hidden">
             <button
               className="flex items-center gap-3 py-2 px-4 hover:bg-gray-50/50 disabled:opacity-75 disabled:cursor-not-allowed transition"
@@ -96,9 +107,18 @@ const PostInfo = ({ post, currentUser }: Props) => {
             </button>
           </div>
 
-          <div className="flex items-center justify-center w-10 h-10 bg-[hsl(0,0%,18.82%)] hover:bg-gray-50/50 rounded-full cursor-pointer transition">
+          <div
+            className="flex items-center justify-center w-10 h-10 bg-[hsl(0,0%,18.82%)] hover:bg-gray-50/50 rounded-full cursor-pointer transition"
+            onClick={() => infoModal.toggle()}
+          >
             <HiOutlineDotsHorizontal size={20} />
           </div>
+
+          <InfoModal
+            disabled={saving}
+            onClick={handleWatchLater}
+            label={`${hasAdded ? "Remove from" : "Save to"} watch later`}
+          />
         </div>
       </div>
 

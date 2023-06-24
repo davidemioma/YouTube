@@ -30,6 +30,12 @@ const Post = ({ post, currentUser }: Props) => {
     router.push(`/watch/${post.id}`);
   };
 
+  const watchLaterHandler = () => {
+    handleWatchLater();
+
+    setShow(false);
+  };
+
   return (
     <div
       className="group w-full max-w-sm md:w-full h-[300px] flex flex-col cursor-pointer"
@@ -79,7 +85,7 @@ const Post = ({ post, currentUser }: Props) => {
 
         {show && (
           <WatchLater
-            onClick={handleWatchLater}
+            onClick={watchLaterHandler}
             disabled={loading}
             label={`${hasAdded ? "Remove from" : "Save to"} watch later`}
           />
