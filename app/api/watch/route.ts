@@ -2,7 +2,7 @@ import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 
-export async function PATCH(request: Request) {
+export async function POST(request: Request) {
   try {
     const currentUser = await getCurrentUser();
 
@@ -12,7 +12,7 @@ export async function PATCH(request: Request) {
 
     const body = await request.json();
 
-    const { hasLiked, postId } = body;
+    const { postId } = body;
 
     if (!postId) {
       return new NextResponse("Invalid credentials", { status: 400 });
@@ -28,49 +28,27 @@ export async function PATCH(request: Request) {
       return new NextResponse("Post does not exists", { status: 400 });
     }
 
-    if (!hasLiked) {
-      await prisma.user.update({
-        where: {
-          id: currentUser.id,
-        },
-        data: {
-          likedPosts: {
-            connect: {
-              id: postId,
-            },
-          },
-        },
-      });
+    const postExists = currentUser.seenPosts.find(
+      (seenPost) => seenPost.id === post.id
+    );
 
-      await prisma.user.update({
-        where: {
-          id: currentUser.id,
-        },
-        data: {
-          dislikedPosts: {
-            disconnect: {
-              id: postId,
-            },
-          },
-        },
-      });
-
-      return NextResponse.json("Liked post successfull");
+    if (postExists) {
+      return NextResponse.json("Viewed successfull");
     } else {
       await prisma.user.update({
         where: {
           id: currentUser.id,
         },
         data: {
-          likedPosts: {
-            disconnect: {
-              id: postId,
+          seenPosts: {
+            connect: {
+              id: post.id,
             },
           },
         },
       });
 
-      return NextResponse.json("Unliked successfull");
+      return NextResponse.json("Viewed successfull");
     }
   } catch (err) {
     return new NextResponse("Internal Error", { status: 500 });

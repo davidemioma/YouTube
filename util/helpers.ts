@@ -88,3 +88,23 @@ export const categories = [
     icon: SiStylelint,
   },
 ];
+
+export const getRandomPosts = (posts: any[], numOfPosts: number) => {
+  if (numOfPosts > posts.length) {
+    return posts.slice(0, posts.length);
+  }
+
+  const randomPosts = [];
+
+  const usersCopy = [...posts];
+
+  while (randomPosts.length < numOfPosts) {
+    const randomIndex = Math.floor(Math.random() * usersCopy.length);
+
+    const randomPost = usersCopy.splice(randomIndex, 1)[0];
+
+    randomPosts.push(randomPost);
+  }
+
+  return randomPosts;
+};

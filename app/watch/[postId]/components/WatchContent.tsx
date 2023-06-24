@@ -1,9 +1,14 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
+import axios from "axios";
 import Player from "./Player";
+import Comments from "./Comments";
 import PostInfo from "./PostInfo";
+import { toast } from "react-hot-toast";
 import RelatedPosts from "./RelatedPosts";
+import { useRouter } from "next/navigation";
+import { getRandomPosts } from "@/util/helpers";
 import useInfoModal from "@/hooks/useInfoModal";
 import { CurrentUser, PostDetails, PostProps } from "@/types";
 
@@ -14,11 +19,30 @@ interface Props {
 }
 
 const WatchContent = ({ currentUser, post, relatedPosts }: Props) => {
+  const router = useRouter();
+
   const infoModal = useInfoModal();
 
   const closeAllModals = () => {
     infoModal.isOpen && infoModal.onClose();
   };
+
+  useEffect(() => {
+    const viewVideo = async () => {
+      await axios
+        .post("/api/watch", {
+          postId: post?.id,
+        })
+        .then(() => {
+          router.refresh();
+        })
+        .catch((err) => {
+          toast.error("Something went wrong");
+        });
+    };
+
+    viewVideo();
+  }, []);
 
   return (
     <div className="w-full h-full overflow-y-auto" onClick={closeAllModals}>
@@ -27,9 +51,20 @@ const WatchContent = ({ currentUser, post, relatedPosts }: Props) => {
       <div className="flex flex-col lg:flex-row gap-5 p-5">
         <div className="w-full lg:flex-1">
           <PostInfo currentUser={currentUser} post={post} />
+
+          <div className="hidden lg:block mt-5 w-full">
+            <Comments currentUser={currentUser} post={post} />
+          </div>
         </div>
 
-        <RelatedPosts currentUser={currentUser} posts={relatedPosts} />
+        <RelatedPosts
+          currentUser={currentUser}
+          posts={getRandomPosts(relatedPosts, 10)}
+        />
+
+        <div className="lg:hidden w-full">
+          <Comments currentUser={currentUser} post={post} />
+        </div>
       </div>
     </div>
   );

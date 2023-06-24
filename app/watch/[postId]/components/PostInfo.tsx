@@ -122,7 +122,7 @@ const PostInfo = ({ post, currentUser }: Props) => {
         </div>
       </div>
 
-      <div className="bg-[hsl(0,0%,18.82%)] w-full p-3 mt-4 mb-10 rounded-lg">
+      <div className="bg-[hsl(0,0%,18.82%)] w-full p-3 mt-4 rounded-lg">
         <div className="flex items-center gap-2 text-sm font-semibold mb-1">
           <span>{numberFormatter(post?.seenIds.length!)} views</span>
 

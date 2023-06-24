@@ -8,7 +8,11 @@ export const getPostById = async (id: string) => {
       },
       include: {
         user: true,
-        comments: true,
+        comments: {
+          include: {
+            user: true,
+          },
+        },
       },
     });
 

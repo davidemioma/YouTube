@@ -11,7 +11,11 @@ export type PostProps = Post & {
   user: User;
 };
 
+export type CommentProps = Comment & {
+  user: User;
+};
+
 export type PostDetails = Post & {
   user: User;
-  comments: Comment[];
+  comments: CommentProps[];
 };
