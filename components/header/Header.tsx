@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
+import Link from "next/link";
 import qs from "query-string";
 import Avatar from "../Avatar";
+import Image from "next/image";
 import { CurrentUser } from "@/types";
 import IconButton from "./IconButton";
-import { FaYoutube } from "react-icons/fa";
 import { BsArrowLeft } from "react-icons/bs";
 import { RiVideoAddLine } from "react-icons/ri";
 import { AiOutlineSearch } from "react-icons/ai";
@@ -65,14 +66,23 @@ const Header = ({ currentUser }: Props) => {
         <div
           className={`${
             showSearch ? "hidden md:flex" : "flex"
-          } flex items-center gap-3`}
+          } flex items-center gap-1`}
         >
           <IconButton
             Icon={RxHamburgerMenu}
             onClick={() => sideModal.onOpen()}
           />
 
-          <FaYoutube size={30} color="red" />
+          <Link href="/">
+            <div className="relative w-[70px] h-[70px] overflow-hidden">
+              <Image
+                className="object-cover"
+                src="/assets/logo.png"
+                fill
+                alt=""
+              />
+            </div>
+          </Link>
         </div>
 
         {showSearch && (
@@ -115,7 +125,7 @@ const Header = ({ currentUser }: Props) => {
         <div
           className={`${
             showSearch ? "hidden md:flex" : "flex"
-          } flex items-center gap-2`}
+          } flex items-center gap-1 sm:gap-2`}
         >
           <div className="md:hidden">
             <IconButton

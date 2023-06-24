@@ -5,7 +5,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 
 interface Props {
   disabled?: boolean;
-  onClick: () => {};
+  onClick: () => void;
   label: string;
 }
 

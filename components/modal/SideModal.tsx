@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import { CurrentUser } from "@/types";
 import Sidebar from "../sidebar/Sidebar";
-import { FaYoutube } from "react-icons/fa";
 import IconButton from "../header/IconButton";
 import useSideModal from "@/hooks/useSideModal";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { CurrentUser } from "@/types";
 
 interface Props {
   currentUser: CurrentUser | null;
@@ -43,10 +43,17 @@ const SideModal = ({ currentUser }: Props) => {
           showModal ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out`}
       >
-        <div className="flex items-center gap-3 px-5 pt-4">
+        <div className="flex items-center gap-0.5 px-5 pt-2">
           <IconButton Icon={RxHamburgerMenu} onClick={onCloseHandler} />
 
-          <FaYoutube size={30} color="red" />
+          <div className="relative w-[70px] h-[70px] overflow-hidden">
+            <Image
+              className="object-cover"
+              src="/assets/logo.png"
+              fill
+              alt=""
+            />
+          </div>
         </div>
 
         <Sidebar currentUser={currentUser} />

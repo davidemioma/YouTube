@@ -22,7 +22,7 @@ const useWatchLater = (currentUser: CurrentUser | null, postId: string) => {
     );
   }, [currentUser]);
 
-  const handleWatchLater = async () => {
+  const handleWatchLater = () => {
     setLoading(true);
 
     axios

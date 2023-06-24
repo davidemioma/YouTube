@@ -1,13 +1,13 @@
 import "./globals.css";
 import { Nunito_Sans } from "next/font/google";
 import Menubar from "@/components/Menubar";
+import Container from "@/components/Container";
 import Header from "@/components/header/Header";
 import Sidebar from "@/components/sidebar/Sidebar";
 import SideModal from "@/components/modal/SideModal";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import { getCurrentUser } from "./actions/getCurrentUser";
-import Container from "@/components/Container";
 
 const font = Nunito_Sans({ subsets: ["latin"] });
 
@@ -15,9 +15,6 @@ export const metadata = {
   title: "YouTube-Clone",
   description: "YouTube Clone",
 };
-
-//This means this page will not be cached and the data on this page will always be up to date
-export const revalidate = 0;
 
 export default async function RootLayout({
   children,
@@ -36,9 +33,11 @@ export default async function RootLayout({
 
           <Menubar currentUser={currentUser} />
 
-          <SideModal currentUser={currentUser} />
+          <div className="xl:hidden">
+            <SideModal currentUser={currentUser} />
+          </div>
 
-          <div className="hidden xl:block fixed top-14 h-screen w-[250px] overflow-y-auto">
+          <div className="hidden xl:block fixed top-12 h-screen w-[250px] overflow-y-auto">
             <Sidebar currentUser={currentUser} />
           </div>
 
