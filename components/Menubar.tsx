@@ -58,8 +58,8 @@ const Menubar = ({ currentUser }: Props) => {
   };
 
   return (
-    <div className="hidden md:block xl:hidden fixed top-14 z-30 h-full bg-black w-28 cursor-pointer">
-      <div className="w-full flex flex-col pl-1 pr-8">
+    <div className="hidden md:block xl:hidden fixed top-14 z-30 h-full bg-black w-24 px-2 cursor-pointer">
+      <div className="w-full flex flex-col item-center">
         {menuItems.map((item) => (
           <div
             key={item.label}

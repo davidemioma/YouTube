@@ -37,13 +37,13 @@ export default async function RootLayout({
             <SideModal currentUser={currentUser} />
           </div>
 
-          <div className="hidden xl:block fixed top-12 h-screen w-[250px] overflow-y-auto">
+          <div className="hidden xl:block fixed top-14 h-screen w-[250px] overflow-y-auto">
             <Sidebar currentUser={currentUser} />
           </div>
 
           <ModalProvider currentUser={currentUser} />
 
-          <main className="w-screen h-screen pt-14 md:pl-28 xl:pl-[250px] overflow-hidden">
+          <main className="w-screen h-screen pt-14 md:pl-24 xl:pl-[250px] overflow-hidden">
             {children}
           </main>
         </Container>

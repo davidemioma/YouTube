@@ -30,7 +30,7 @@ const Sidebar = ({ currentUser }: Props) => {
 
   return (
     <div className="h-full w-full px-4">
-      <div className="flex flex-col gap-1 py-3 border-b border-[hsl(0,0%,18.82%)]">
+      <div className="flex flex-col gap-1 pb-3 border-b border-[hsl(0,0%,18.82%)]">
         <SidebarItem
           label="Home"
           href="/"
