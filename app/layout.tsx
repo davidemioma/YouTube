@@ -8,6 +8,7 @@ import SideModal from "@/components/modal/SideModal";
 import ModalProvider from "@/providers/ModalProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import { getCurrentUser } from "./actions/getCurrentUser";
+import { getSubscriptions } from "./actions/getSubscriptions";
 
 const font = Nunito_Sans({ subsets: ["latin"] });
 
@@ -23,6 +24,8 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
 
+  const channels = await getSubscriptions();
+
   return (
     <html lang="en">
       <body className={font.className}>
@@ -34,11 +37,11 @@ export default async function RootLayout({
           <Menubar currentUser={currentUser} />
 
           <div className="xl:hidden">
-            <SideModal currentUser={currentUser} />
+            <SideModal currentUser={currentUser} channels={channels} />
           </div>
 
           <div className="hidden xl:block fixed top-14 h-screen w-[250px] overflow-y-auto">
-            <Sidebar currentUser={currentUser} />
+            <Sidebar currentUser={currentUser} channels={channels} />
           </div>
 
           <ModalProvider currentUser={currentUser} />

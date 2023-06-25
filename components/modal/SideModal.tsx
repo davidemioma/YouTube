@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { CurrentUser } from "@/types";
+import { User } from "@prisma/client";
 import Sidebar from "../sidebar/Sidebar";
 import IconButton from "../header/IconButton";
 import useSideModal from "@/hooks/useSideModal";
@@ -10,9 +11,10 @@ import { RxHamburgerMenu } from "react-icons/rx";
 
 interface Props {
   currentUser: CurrentUser | null;
+  channels: User[];
 }
 
-const SideModal = ({ currentUser }: Props) => {
+const SideModal = ({ currentUser, channels }: Props) => {
   const sideModal = useSideModal();
 
   const [showModal, setShowModal] = useState(sideModal.isOpen);
@@ -56,7 +58,7 @@ const SideModal = ({ currentUser }: Props) => {
           </div>
         </div>
 
-        <Sidebar currentUser={currentUser} />
+        <Sidebar currentUser={currentUser} channels={channels} />
       </div>
     </>
   );

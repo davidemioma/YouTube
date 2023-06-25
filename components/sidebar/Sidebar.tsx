@@ -17,15 +17,17 @@ import {
   MdOutlineVideoLibrary,
 } from "react-icons/md";
 import SubItem from "./SubItem";
+import { CurrentUser } from "@/types";
+import { User } from "@prisma/client";
 import SidebarItem from "./SidebarItem";
 import { usePathname } from "next/navigation";
-import { CurrentUser } from "@/types";
 
 interface Props {
   currentUser: CurrentUser | null;
+  channels: User[];
 }
 
-const Sidebar = ({ currentUser }: Props) => {
+const Sidebar = ({ currentUser, channels }: Props) => {
   const pathname = usePathname();
 
   return (
@@ -91,8 +93,8 @@ const Sidebar = ({ currentUser }: Props) => {
       <div className="flex flex-col gap-1 py-3 border-b border-[hsl(0,0%,18.82%)]">
         <h2>Subscriptions</h2>
 
-        {[0, 0, 0, 0, 0].map((sub, i) => (
-          <SubItem key={i} />
+        {channels.map((channel) => (
+          <SubItem key={channel.id} channel={channel} />
         ))}
       </div>
 
