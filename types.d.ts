@@ -19,3 +19,7 @@ export type PostDetails = Post & {
   user: User;
   comments: CommentProps[];
 };
+
+export type ChannelProps = User & {
+  posts: PostProps[];
+};
