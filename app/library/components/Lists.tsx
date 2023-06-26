@@ -33,7 +33,7 @@ const Lists = ({ title, Icon, href, posts, currentUser }: Props) => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 py-5">
         {posts.slice(0, 6).map((post) => (
-          <RelatedPost post={post} currentUser={currentUser} />
+          <RelatedPost key={post.id} post={post} currentUser={currentUser} />
         ))}
       </div>
     </div>
