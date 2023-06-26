@@ -29,12 +29,20 @@ export async function PATCH(request: Request) {
     }
 
     if (!hasSubscribed) {
+      const userSubsList = [...user.subscribersIds];
+
+      const mySubsList = [...currentUser.subscribedToIds];
+
+      mySubsList.push(user.id);
+
+      userSubsList.push(currentUser.id);
+
       await prisma.user.update({
         where: {
           id: currentUser.id,
         },
         data: {
-          subscribedToIds: [user.id, ...currentUser.subscribedToIds],
+          subscribedToIds: mySubsList,
         },
       });
 
@@ -43,7 +51,7 @@ export async function PATCH(request: Request) {
           id: user.id,
         },
         data: {
-          subscribersIds: [currentUser.id, ...user.subscribedToIds],
+          subscribersIds: userSubsList,
         },
       });
 

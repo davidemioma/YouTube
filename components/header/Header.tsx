@@ -7,16 +7,16 @@ import Avatar from "../Avatar";
 import Image from "next/image";
 import { CurrentUser } from "@/types";
 import IconButton from "./IconButton";
+import { IoMdClose } from "react-icons/Io";
+import { useRouter } from "next/navigation";
 import { BsArrowLeft } from "react-icons/bs";
+import useSideModal from "@/hooks/useSideModal";
+import useLoginModal from "@/hooks/useLoginModal";
 import { RiVideoAddLine } from "react-icons/ri";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
-import useSideModal from "@/hooks/useSideModal";
-import useLoginModal from "@/hooks/useLoginModal";
-import { useRouter } from "next/navigation";
 import useAddPostModal from "@/hooks/useAddPostModal";
 import useProfileModal from "@/hooks/useProfileModal";
-import { IoMdNotificationsOutline, IoMdClose } from "react-icons/Io";
 
 interface Props {
   currentUser: CurrentUser | null;
@@ -135,8 +135,6 @@ const Header = ({ currentUser }: Props) => {
           </div>
 
           <IconButton Icon={RiVideoAddLine} onClick={onOpenPostModal} />
-
-          <IconButton Icon={IoMdNotificationsOutline} />
 
           <div className="ml-1">
             {currentUser ? (

@@ -43,7 +43,6 @@ model User {
   accounts Account[]
   posts Post[]
   comments Comment[]
-  notifications Notification[]
 }
 
 model Account {
@@ -87,7 +86,6 @@ model Post {
   disliked User[] @relation("disliked", fields: [dislikedIds], references: [id])
 
   comments Comment[]
-  notifications Notification[]
 }
 
 model Comment {
@@ -101,12 +99,4 @@ model Comment {
   post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
-model Notification {
-  id String @id @default(auto()) @map("_id") @db.ObjectId
-  toId String @db.ObjectId
-  postId String @db.ObjectId
-  createdAt DateTime @default(now())
- 
-  user User @relation(fields: [toId], references: [id], onDelete: Cascade)
-  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
-}
+
