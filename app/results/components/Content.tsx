@@ -11,7 +11,7 @@ interface Props {
 
 const Content = ({ posts, currentUser }: Props) => {
   return (
-    <div className="w-full p-5">
+    <div className="w-full h-full p-5 overflow-y-auto">
       <h1 className="mb-5 text-lg font-semibold">Results</h1>
 
       <div className="flex flex-col gap-4">
