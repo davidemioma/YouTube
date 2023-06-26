@@ -36,7 +36,10 @@ const ChannelPost = ({ post, currentUser }: Props) => {
   };
 
   return (
-    <div className="group flex flex-col gap-2 w-52 h-52">
+    <div
+      className="group flex flex-col gap-2 w-52 h-52"
+      onClick={() => show && setShow(false)}
+    >
       <div
         className="relative w-full h-32 rounded-lg overflow-hidden cursor-pointer"
         onClick={onClickHandler}

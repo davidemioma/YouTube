@@ -36,7 +36,10 @@ const RelatedPost = ({ currentUser, post }: Props) => {
   };
 
   return (
-    <div className="group w-full flex items-start gap-2 cursor-pointer">
+    <div
+      className="group w-full flex items-start gap-2 cursor-pointer"
+      onClick={() => show && setShow(false)}
+    >
       <div
         className="relative w-[45%] h-24 rounded-lg overflow-hidden"
         onClick={onClickHandler}

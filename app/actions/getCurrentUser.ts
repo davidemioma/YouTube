@@ -13,9 +13,17 @@ export const getCurrentUser = async () => {
       },
       include: {
         seenPosts: true,
-        likedPosts: true,
+        likedPosts: {
+          include: {
+            user: true,
+          },
+        },
         dislikedPosts: true,
-        watchLaterPosts: true,
+        watchLaterPosts: {
+          include: {
+            user: true,
+          },
+        },
       },
     });
 

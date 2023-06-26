@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import Avatar from "../Avatar";
 import Moment from "react-moment";
 import { useRouter } from "next/navigation";
 import WatchLater from "../modal/WatchLater";
@@ -16,7 +15,7 @@ interface Props {
   currentUser: CurrentUser | null;
 }
 
-const SearchedPost = ({ post, currentUser }: Props) => {
+const SavedPost = ({ post, currentUser }: Props) => {
   const router = useRouter();
 
   const [show, setShow] = useState(false);
@@ -38,11 +37,11 @@ const SearchedPost = ({ post, currentUser }: Props) => {
 
   return (
     <div
-      className="group flex flex-col md:flex-row gap-5 cursor-pointer"
+      className="group w-full flex gap-2 hover:bg-[hsl(0,0%,18.82%)] p-2 sm:p-3 rounded-lg cursor-pointer transition"
       onClick={() => show && setShow(false)}
     >
       <div
-        className="relative w-full md:max-w-xs h-48 overflow-hidden rounded-lg"
+        className="relative w-[40%] max-w-[200px] h-28 overflow-hidden rounded-lg"
         onClick={onClickHandler}
       >
         <Image
@@ -53,30 +52,13 @@ const SearchedPost = ({ post, currentUser }: Props) => {
         />
       </div>
 
-      <div className="relative flex-1 flex items-start gap-3 justify-between">
-        <div className="flex flex-col" onClick={onClickHandler}>
-          <span className="font-semibold line-clamp-2 md:line-clamp-1">
-            {post.title}
-          </span>
+      <div className="relative w-[60%] flex-1 flex items-start gap-3 justify-between">
+        <div className="flex flex-col gap-2" onClick={onClickHandler}>
+          <span className="font-semibold line-clamp-2">{post.title}</span>
 
-          <span className="text-sm font-semibold text-gray-50/70 hover:text-white">
-            {numberFormatter(post.seenIds.length)} views .{" "}
+          <span className="text-sm font-semibold text-gray-50/70">
+            {post.user.name} . {numberFormatter(post.seenIds.length)} views .{" "}
             {<Moment fromNow date={new Date(post.createdAt).toUTCString()} />}
-          </span>
-
-          <div className="flex items-center gap-3 py-3">
-            <Avatar
-              imgSrc={post.user?.image!}
-              onClick={() => router.push(`/channel/${post.user?.id}`)}
-            />
-
-            <span className="text-sm font-semibold text-gray-50/70 hover:text-white">
-              {post.user?.name}
-            </span>
-          </div>
-
-          <span className="text-sm text-gray-50/70 line-clamp-2 md:line-clamp-1">
-            {post.description}
           </span>
         </div>
 
@@ -98,4 +80,4 @@ const SearchedPost = ({ post, currentUser }: Props) => {
   );
 };
 
-export default SearchedPost;
+export default SavedPost;
