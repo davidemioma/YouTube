@@ -7,7 +7,7 @@ import Avatar from "../Avatar";
 import Image from "next/image";
 import { CurrentUser } from "@/types";
 import IconButton from "./IconButton";
-import { IoMdClose } from "react-icons/Io";
+import { IoMdClose } from "react-icons/io";
 import { useRouter } from "next/navigation";
 import { BsArrowLeft } from "react-icons/bs";
 import useSideModal from "@/hooks/useSideModal";
