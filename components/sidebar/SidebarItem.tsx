@@ -31,14 +31,18 @@ const SidebarItem = ({
   const loginModal = useLoginModal();
 
   const handleClick = () => {
-    sideModal.onClose();
-
     if (href === "/") {
       router.push(href);
+
+      sideModal.onClose();
     } else if (href !== "/" && !currentUser) {
-      return loginModal.onOpen();
+      sideModal.onClose();
+
+      loginModal.onOpen();
     } else {
       router.push(href);
+
+      sideModal.onClose();
     }
   };
   return (

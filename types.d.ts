@@ -18,7 +18,7 @@ export type ChannelProps = User & {
 };
 
 export type CurrentUser = User & {
-  seenPosts: Post[];
+  seenPosts: PostProps[];
   likedPosts: PostProps[];
   dislikedPosts: Post[];
   watchLaterPosts: PostProps[];

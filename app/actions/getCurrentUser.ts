@@ -12,7 +12,11 @@ export const getCurrentUser = async () => {
         email: session.user.email,
       },
       include: {
-        seenPosts: true,
+        seenPosts: {
+          include: {
+            user: true,
+          },
+        },
         likedPosts: {
           include: {
             user: true,
