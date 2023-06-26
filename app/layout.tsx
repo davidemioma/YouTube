@@ -46,7 +46,7 @@ export default async function RootLayout({
 
           <ModalProvider currentUser={currentUser} />
 
-          <main className="w-screen h-screen pt-14 md:pl-24 xl:pl-[250px] overflow-hidden">
+          <main className="w-screen h-screen pt-14 md:pl-24 xl:pl-[250px] overflow-y-auto">
             {children}
           </main>
         </Container>

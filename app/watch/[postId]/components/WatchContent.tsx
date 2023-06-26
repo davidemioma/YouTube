@@ -41,7 +41,9 @@ const WatchContent = ({ currentUser, post, relatedPosts }: Props) => {
         });
     };
 
-    viewVideo();
+    if (currentUser) {
+      viewVideo();
+    }
   }, []);
 
   return (

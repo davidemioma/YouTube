@@ -65,54 +65,62 @@ const PostInfo = ({ post, currentUser }: Props) => {
             </span>
           </div>
 
-          {post?.user?.id !== currentUser?.id && (
-            <button
-              className={`${
-                hasSubscribed
-                  ? "bg-[hsl(0,0%,18.82%)] text-white"
-                  : "bg-gray-50 text-black"
-              } text-sm font-semibold ml-2 px-4 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-75 transition`}
-              onClick={handleSubscribe}
-              disabled={loading}
-            >
-              {hasSubscribed ? "Unsubscribe" : "Subscribe"}
-            </button>
+          {currentUser && (
+            <>
+              {post?.user?.id !== currentUser?.id && (
+                <button
+                  className={`${
+                    hasSubscribed
+                      ? "bg-[hsl(0,0%,18.82%)] text-white"
+                      : "bg-gray-50 text-black"
+                  } text-sm font-semibold ml-2 px-4 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-75 transition`}
+                  onClick={handleSubscribe}
+                  disabled={loading}
+                >
+                  {hasSubscribed ? "Unsubscribe" : "Subscribe"}
+                </button>
+              )}
+            </>
           )}
         </div>
 
         <div className="relative flex items-center gap-3">
-          <div className="bg-[hsl(0,0%,18.82%)] w-[134px] flex items-center rounded-full overflow-hidden">
-            <button
-              className="flex items-center gap-3 py-2 px-4 hover:bg-gray-50/50 disabled:opacity-75 disabled:cursor-not-allowed transition"
-              onClick={handleLike}
-              disabled={isLoading}
+          {currentUser && (
+            <div className="bg-[hsl(0,0%,18.82%)] w-[134px] flex items-center rounded-full overflow-hidden">
+              <button
+                className="flex items-center gap-3 py-2 px-4 hover:bg-gray-50/50 disabled:opacity-75 disabled:cursor-not-allowed transition"
+                onClick={handleLike}
+                disabled={isLoading}
+              >
+                {hasLiked ? <FaThumbsUp size={23} /> : <FiThumbsUp size={23} />}
+
+                <span>{numberFormatter(post?.likedIds?.length!)}</span>
+              </button>
+
+              <div className="bg-[#717171] w-[1px] h-full py-2" />
+
+              <button
+                className="py-2 px-4 hover:bg-[#717171] disabled:opacity-75 disabled:cursor-not-allowed transition"
+                onClick={handleDislike}
+                disabled={isLoading}
+              >
+                {hasDisliked ? (
+                  <FaThumbsDown size={23} />
+                ) : (
+                  <FiThumbsDown size={23} />
+                )}
+              </button>
+            </div>
+          )}
+
+          {currentUser && (
+            <div
+              className="flex items-center justify-center w-10 h-10 bg-[hsl(0,0%,18.82%)] hover:bg-gray-50/50 rounded-full cursor-pointer transition"
+              onClick={() => infoModal.toggle()}
             >
-              {hasLiked ? <FaThumbsUp size={23} /> : <FiThumbsUp size={23} />}
-
-              <span>{numberFormatter(post?.likedIds?.length!)}</span>
-            </button>
-
-            <div className="bg-[#717171] w-[1px] h-full py-2" />
-
-            <button
-              className="py-2 px-4 hover:bg-[#717171] disabled:opacity-75 disabled:cursor-not-allowed transition"
-              onClick={handleDislike}
-              disabled={isLoading}
-            >
-              {hasDisliked ? (
-                <FaThumbsDown size={23} />
-              ) : (
-                <FiThumbsDown size={23} />
-              )}
-            </button>
-          </div>
-
-          <div
-            className="flex items-center justify-center w-10 h-10 bg-[hsl(0,0%,18.82%)] hover:bg-gray-50/50 rounded-full cursor-pointer transition"
-            onClick={() => infoModal.toggle()}
-          >
-            <HiOutlineDotsHorizontal size={20} />
-          </div>
+              <HiOutlineDotsHorizontal size={20} />
+            </div>
+          )}
 
           <InfoModal
             disabled={saving}

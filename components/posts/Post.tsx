@@ -77,11 +77,13 @@ const Post = ({ post, currentUser }: Props) => {
           </div>
         </div>
 
-        <RxDotsVertical
-          className="cursor-pointer opacity-0 group-hover:opacity-100 flex-shrink-0"
-          onClick={() => setShow((prev) => !prev)}
-          size={20}
-        />
+        {currentUser && (
+          <RxDotsVertical
+            className="cursor-pointer opacity-0 group-hover:opacity-100 flex-shrink-0"
+            onClick={() => setShow((prev) => !prev)}
+            size={20}
+          />
+        )}
 
         {show && (
           <WatchLater

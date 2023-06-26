@@ -43,18 +43,22 @@ const ProfileInfo = ({ channel, currentUser }: Props) => {
         </div>
       </div>
 
-      {channel?.id !== currentUser?.id && (
-        <button
-          className={`${
-            hasSubscribed
-              ? "bg-[hsl(0,0%,18.82%)] text-white"
-              : "bg-gray-50 text-black"
-          } text-sm font-semibold ml-2 px-4 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-75 transition`}
-          onClick={handleSubscribe}
-          disabled={loading}
-        >
-          {hasSubscribed ? "Unsubscribe" : "Subscribe"}
-        </button>
+      {currentUser && (
+        <>
+          {channel?.id !== currentUser?.id && (
+            <button
+              className={`${
+                hasSubscribed
+                  ? "bg-[hsl(0,0%,18.82%)] text-white"
+                  : "bg-gray-50 text-black"
+              } text-sm font-semibold ml-2 px-4 py-2 rounded-full disabled:cursor-not-allowed disabled:opacity-75 transition`}
+              onClick={handleSubscribe}
+              disabled={loading}
+            >
+              {hasSubscribed ? "Unsubscribe" : "Subscribe"}
+            </button>
+          )}
+        </>
       )}
     </div>
   );

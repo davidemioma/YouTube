@@ -51,29 +51,31 @@ const Comments = ({ currentUser, post }: Props) => {
         {post?.comments.length} Comments
       </span>
 
-      <form onSubmit={addCommentHandler} className="flex items-start gap-3">
-        <Avatar imgSrc={currentUser?.image!} />
+      {currentUser && (
+        <form onSubmit={addCommentHandler} className="flex items-start gap-3">
+          <Avatar imgSrc={currentUser?.image!} />
 
-        <div className="flex-1 flex flex-col gap-1">
-          <input
-            className="bg-transparent pb-1 border-b border-[hsl(0,0%,18.82%)] text-sm focus:outline-none focus:border-white transition"
-            value={comment}
-            type="text"
-            placeholder="Add a comment..."
-            onChange={(e) => setComment(e.target.value)}
-          />
+          <div className="flex-1 flex flex-col gap-1">
+            <input
+              className="bg-transparent pb-1 border-b border-[hsl(0,0%,18.82%)] text-sm focus:outline-none focus:border-white transition"
+              value={comment}
+              type="text"
+              placeholder="Add a comment..."
+              onChange={(e) => setComment(e.target.value)}
+            />
 
-          {comment.trim() && (
-            <button
-              type="submit"
-              className="bg-blue-400 text-black text-sm font-semibold px-3 py-1.5 rounded-full w-full max-w-[120px] ml-auto disabled:text-[#717171] disabled:bg-[hsl(0,0%,18.82%)] transition"
-              disabled={!comment.trim() || loading}
-            >
-              Comment
-            </button>
-          )}
-        </div>
-      </form>
+            {comment.trim() && (
+              <button
+                type="submit"
+                className="bg-blue-400 text-black text-sm font-semibold px-3 py-1.5 rounded-full w-full max-w-[120px] ml-auto disabled:text-[#717171] disabled:bg-[hsl(0,0%,18.82%)] transition"
+                disabled={!comment.trim() || loading}
+              >
+                Comment
+              </button>
+            )}
+          </div>
+        </form>
+      )}
 
       <div className="flex flex-col gap-3">
         {post?.comments.map((comment) => (
