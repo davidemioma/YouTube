@@ -12,7 +12,7 @@ const Player = ({ videoUrl }: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <div className="bg-[hsl(0,0%,7%)] relative w-full h-[55vh] overflow-hidden">
+    <div className="bg-[hsl(0,0%,7%)] relative w-full h-[30vh] sm:h-[40vh] md:h-[50vh] overflow-hidden">
       <div className="absolute inset-0">
         <ReactPlayer
           url={videoUrl}
