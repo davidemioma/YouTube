@@ -22,9 +22,10 @@ import { IoMdNotificationsOutline, IoMdNotifications } from "react-icons/io";
 
 interface Props {
   currentUser: CurrentUser | null;
+  unseen: number;
 }
 
-const Header = ({ currentUser }: Props) => {
+const Header = ({ currentUser, unseen }: Props) => {
   const router = useRouter();
 
   const sideModal = useSideModal();
@@ -140,16 +141,22 @@ const Header = ({ currentUser }: Props) => {
 
           <IconButton Icon={RiVideoAddLine} onClick={onOpenPostModal} />
 
-          <IconButton
-            Icon={
-              notificationsModal.isOpen
-                ? IoMdNotifications
-                : IoMdNotificationsOutline
-            }
-            onClick={() =>
-              currentUser ? notificationsModal.toggle() : loginModal.onOpen()
-            }
-          />
+          <div className="relative">
+            <IconButton
+              Icon={
+                notificationsModal.isOpen
+                  ? IoMdNotifications
+                  : IoMdNotificationsOutline
+              }
+              onClick={() =>
+                currentUser ? notificationsModal.toggle() : loginModal.onOpen()
+              }
+            />
+
+            {unseen > 0 && (
+              <span className="absolute top-2 right-3 bg-blue-500 w-2 h-2 rounded-full overflow-hidden" />
+            )}
+          </div>
 
           <div className="ml-1">
             {currentUser ? (

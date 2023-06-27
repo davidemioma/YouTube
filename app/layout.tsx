@@ -11,6 +11,7 @@ import ToasterProvider from "@/providers/ToasterProvider";
 import { getCurrentUser } from "./actions/getCurrentUser";
 import { getSubscriptions } from "./actions/getSubscriptions";
 import { getNotifications } from "./actions/getNotifications";
+import { getUnseenNotifications } from "./actions/getUnseenNotifications";
 
 const font = Nunito_Sans({ subsets: ["latin"] });
 
@@ -30,6 +31,8 @@ export default async function RootLayout({
 
   const notifications = await getNotifications();
 
+  const unseen = await getUnseenNotifications();
+
   return (
     <html lang="en">
       <body className={font.className}>
@@ -37,7 +40,7 @@ export default async function RootLayout({
           <ToasterProvider />
 
           <Container>
-            <Header currentUser={currentUser} />
+            <Header currentUser={currentUser} unseen={unseen} />
 
             <Menubar currentUser={currentUser} />
 
@@ -54,7 +57,7 @@ export default async function RootLayout({
               notifications={notifications}
             />
 
-            <main className="w-screen h-screen pt-14 md:pl-24 xl:pl-[250px] overflow-y-auto">
+            <main className="w-screen h-screen pt-14 pb-10 sm:pb-0 md:pl-24 xl:pl-[250px] overflow-y-auto">
               {children}
             </main>
           </Container>
