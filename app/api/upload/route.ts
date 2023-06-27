@@ -1,5 +1,6 @@
 import prisma from "@/libs/prismadb";
 import { NextResponse } from "next/server";
+import { pusherServer } from "@/libs/pusher";
 import { getCurrentUser } from "@/app/actions/getCurrentUser";
 
 export async function POST(request: Request) {
@@ -19,7 +20,7 @@ export async function POST(request: Request) {
       return new NextResponse("Invalid credentials", { status: 400 });
     }
 
-    await prisma.post.create({
+    const post = await prisma.post.create({
       data: {
         title,
         description,
@@ -29,6 +30,31 @@ export async function POST(request: Request) {
         videoUrl,
         userId: currentUser.id,
       },
+    });
+
+    currentUser.subscribersIds.forEach(async (userId) => {
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      });
+
+      if (!user) return;
+
+      const notification = await prisma.notification.create({
+        data: {
+          userId: user.id,
+          postId: post.id,
+        },
+      });
+
+      if (user.email) {
+        await pusherServer.trigger(
+          user.email,
+          "notification:new",
+          notification
+        );
+      }
     });
 
     return NextResponse.json("New user created!");

@@ -1,4 +1,4 @@
-import { User, Post, Comment } from "@prisma/client";
+import { User, Post, Comment, Notification } from "@prisma/client";
 
 export type PostProps = Post & {
   user: User;
@@ -22,4 +22,8 @@ export type CurrentUser = User & {
   likedPosts: PostProps[];
   dislikedPosts: Post[];
   watchLaterPosts: PostProps[];
+};
+
+export type NotificationProps = Notification & {
+  post: PostProps | null;
 };

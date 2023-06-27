@@ -17,6 +17,8 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { RxHamburgerMenu } from "react-icons/rx";
 import useAddPostModal from "@/hooks/useAddPostModal";
 import useProfileModal from "@/hooks/useProfileModal";
+import useNotificationsModal from "@/hooks/useNotificationsModal";
+import { IoMdNotificationsOutline, IoMdNotifications } from "react-icons/io";
 
 interface Props {
   currentUser: CurrentUser | null;
@@ -32,6 +34,8 @@ const Header = ({ currentUser }: Props) => {
   const addPostModal = useAddPostModal();
 
   const profileModal = useProfileModal();
+
+  const notificationsModal = useNotificationsModal();
 
   const [showSearch, setShowSearch] = useState(false);
 
@@ -135,6 +139,17 @@ const Header = ({ currentUser }: Props) => {
           </div>
 
           <IconButton Icon={RiVideoAddLine} onClick={onOpenPostModal} />
+
+          <IconButton
+            Icon={
+              notificationsModal.isOpen
+                ? IoMdNotifications
+                : IoMdNotificationsOutline
+            }
+            onClick={() =>
+              currentUser ? notificationsModal.toggle() : loginModal.onOpen()
+            }
+          />
 
           <div className="ml-1">
             {currentUser ? (
