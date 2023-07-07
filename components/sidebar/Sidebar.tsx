@@ -90,13 +90,15 @@ const Sidebar = ({ currentUser, channels }: Props) => {
         />
       </div>
 
-      <div className="flex flex-col gap-1 py-3 border-b border-[hsl(0,0%,18.82%)]">
-        <h2>Subscriptions</h2>
+      {channels.length > 0 && (
+        <div className="flex flex-col gap-1 py-3 border-b border-[hsl(0,0%,18.82%)]">
+          <h2>Subscriptions</h2>
 
-        {channels.map((channel) => (
-          <SubItem key={channel.id} channel={channel} />
-        ))}
-      </div>
+          {channels.map((channel) => (
+            <SubItem key={channel.id} channel={channel} />
+          ))}
+        </div>
+      )}
 
       <div className="flex flex-col gap-3 py-3 pb-24">
         <div className="flex flex-wrap gap-x-1.5 gap-y-1 items-center text-sm text-[#aaa]">
