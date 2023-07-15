@@ -2,16 +2,24 @@
 
 import React from "react";
 import Lists from "./Lists";
-import { CurrentUser } from "@/types";
+import { CurrentUser, PostProps } from "@/types";
 import { BsClock } from "react-icons/bs";
 import { GoHistory } from "react-icons/go";
 import { FiThumbsUp } from "react-icons/fi";
 
 interface Props {
   currentUser: CurrentUser | null;
+  seenPosts: PostProps[];
+  savedPosts: PostProps[];
+  likedPosts: PostProps[];
 }
 
-const LibraryContent = ({ currentUser }: Props) => {
+const LibraryContent = ({
+  currentUser,
+  seenPosts,
+  savedPosts,
+  likedPosts,
+}: Props) => {
   return (
     <div className="flex flex-col w-full h-full p-5 overflow-y-auto">
       <div className="border-b border-[hsl(0,0%,18.82%)]">
@@ -19,7 +27,7 @@ const LibraryContent = ({ currentUser }: Props) => {
           title="History"
           Icon={GoHistory}
           href="/history"
-          posts={currentUser?.seenPosts || []}
+          posts={seenPosts}
           currentUser={currentUser}
         />
       </div>
@@ -29,7 +37,7 @@ const LibraryContent = ({ currentUser }: Props) => {
           title="Watch Later"
           Icon={BsClock}
           href="/watch-later"
-          posts={currentUser?.watchLaterPosts || []}
+          posts={savedPosts}
           currentUser={currentUser}
         />
       </div>
@@ -39,7 +47,7 @@ const LibraryContent = ({ currentUser }: Props) => {
           title="Liked Videos"
           Icon={FiThumbsUp}
           href="/liked-videos"
-          posts={currentUser?.likedPosts || []}
+          posts={likedPosts}
           currentUser={currentUser}
         />
       </div>

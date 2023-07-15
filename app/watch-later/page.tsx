@@ -8,7 +8,7 @@ export default async function WatchLater() {
 
   const posts = await getWatchLaterPosts();
 
-  if (currentUser?.watchLaterPosts.length === 0) {
+  if (posts.length === 0) {
     return <Empty label="You have no liked videos!" />;
   }
 
