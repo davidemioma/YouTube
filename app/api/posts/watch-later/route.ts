@@ -25,8 +25,8 @@ export async function GET(request: Request) {
 
     const posts = await prismadb.post.findMany({
       where: {
-        seenIds: {
-          has: currentUser?.id,
+        savedIds: {
+          has: currentUser.id,
         },
       },
       take: parseInt(limit),

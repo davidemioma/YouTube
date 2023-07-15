@@ -1,22 +1,55 @@
 "use client";
 
-import React from "react";
-import { CurrentUser } from "@/types";
+import React, { useEffect } from "react";
+import Spinner from "@/components/Spinner";
+import { CurrentUser, PostProps } from "@/types";
 import SavedPost from "@/components/posts/SavedPost";
+import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
+import useUnlimitedScrolling from "@/hooks/useUnlimitedScrolling";
 
 interface Props {
+  initialPosts: PostProps[];
   currentUser: CurrentUser | null;
 }
 
-const SavedContent = ({ currentUser }: Props) => {
+const SavedContent = ({ initialPosts, currentUser }: Props) => {
+  const { ref, entry, data, fetchNextPage, isFetchingNextPage } =
+    useUnlimitedScrolling({
+      key: "infinite-query-watch-later",
+      query: `/api/posts/watch-later?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}`,
+      initialData: initialPosts,
+    });
+
+  //@ts-ignore
+  const posts: PostProps[] =
+    data?.pages?.flatMap((page) => page) ?? initialPosts;
+
+  useEffect(() => {
+    if (entry?.isIntersecting) {
+      fetchNextPage();
+    }
+  }, [entry, fetchNextPage]);
+
   return (
     <div className="flex flex-col gap-5 p-5">
       <span className="text-lg sm:text-xl font-semibold">Watch Later</span>
 
       <div className="w-full flex-1 flex flex-col gap-2 pb-10">
-        {currentUser?.watchLaterPosts.map((post) => (
-          <SavedPost key={post.id} post={post} currentUser={currentUser} />
-        ))}
+        {posts.map((post, i) => {
+          if (i === posts.length - 1) {
+            return (
+              <div key={post.id} ref={ref}>
+                <SavedPost post={post} currentUser={currentUser} />
+              </div>
+            );
+          } else {
+            return (
+              <SavedPost key={post.id} post={post} currentUser={currentUser} />
+            );
+          }
+        })}
+
+        {isFetchingNextPage && <Spinner />}
       </div>
     </div>
   );

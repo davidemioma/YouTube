@@ -35,7 +35,7 @@ const HistoryContent = ({ initialPosts, currentUser }: Props) => {
       <span className="text-lg sm:text-xl font-semibold">Watch History</span>
 
       <div className="w-full flex-1 flex flex-col gap-2 pb-10">
-        {initialPosts.map((post, i) => {
+        {posts.map((post, i) => {
           if (i === posts.length - 1) {
             return (
               <div key={post.id} ref={ref}>
