@@ -7,11 +7,12 @@ import Videos from "./Videos";
 import ViewItem from "./ViewItem";
 import CoverImage from "./CoverImage";
 import ProfileInfo from "./ProfileInfo";
-import { ChannelProps, CurrentUser } from "@/types";
+import { ChannelProps, CurrentUser, PostProps } from "@/types";
 
 interface Props {
   currentUser: CurrentUser | null;
   channel: ChannelProps | null;
+  posts: PostProps[];
 }
 
 enum VIEWS {
@@ -20,19 +21,25 @@ enum VIEWS {
   ABOUT = 2,
 }
 
-const ChannelContent = ({ currentUser, channel }: Props) => {
+const ChannelContent = ({ currentUser, channel, posts }: Props) => {
   const [view, setView] = useState(VIEWS.HOME);
 
   let content = (
     <Home
-      channel={channel}
       currentUser={currentUser}
+      posts={posts}
       viewAll={() => setView(VIEWS.VIDEOS)}
     />
   );
 
-  if (view === VIEWS.VIDEOS) {
-    content = <Videos channel={channel} currentUser={currentUser} />;
+  if (view === VIEWS.VIDEOS && channel?.id) {
+    content = (
+      <Videos
+        channelId={channel?.id!}
+        currentUser={currentUser}
+        initialPosts={posts}
+      />
+    );
   }
 
   if (view === VIEWS.ABOUT) {
