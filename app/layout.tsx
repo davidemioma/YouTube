@@ -37,10 +37,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <QueryProvider>
-          <AuthProvider>
-            <ToasterProvider />
+        <AuthProvider>
+          <ToasterProvider />
 
+          <QueryProvider>
             <Container>
               <Header currentUser={currentUser} unseen={unseen} />
 
@@ -63,8 +63,8 @@ export default async function RootLayout({
                 {children}
               </main>
             </Container>
-          </AuthProvider>
-        </QueryProvider>
+          </QueryProvider>
+        </AuthProvider>
       </body>
     </html>
   );

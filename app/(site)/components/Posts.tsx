@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import axios from "axios";
-import Filters from "./Filters";
 import Empty from "@/components/Empty";
 import Spinner from "@/components/Spinner";
 import Post from "@/components/posts/Post";
@@ -17,8 +16,6 @@ interface Props {
 }
 
 const Posts = ({ initialPosts, currentUser }: Props) => {
-  const [value, setValue] = useState("all");
-
   const lastPostRef = useRef<HTMLElement>(null);
 
   const { ref, entry } = useIntersection({
@@ -29,9 +26,9 @@ const Posts = ({ initialPosts, currentUser }: Props) => {
   const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     ["infinite-query-feed"],
     async ({ pageParam = 1 }) => {
-      const { data } = await axios.get(
-        `/api/posts/feed?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`
-      );
+      const query = `/api/posts/feed?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`;
+
+      const { data } = await axios.get(query);
 
       return data as PostProps[];
     },
@@ -53,24 +50,12 @@ const Posts = ({ initialPosts, currentUser }: Props) => {
     }
   }, [entry, fetchNextPage]);
 
-  const [filteredPosts, setFilteredPosts] = useState<PostProps[]>(posts);
-
-  useEffect(() => {
-    if (value === "all") {
-      setFilteredPosts(posts);
-    } else {
-      setFilteredPosts(posts.filter((post) => post.category === value));
-    }
-  }, [posts, value]);
-
   return (
     <div className="w-full h-full overflow-y-auto">
-      <Filters value={value} setValue={setValue} />
-
-      {filteredPosts.length > 0 ? (
+      {posts.length > 0 ? (
         <>
-          <div className="mt-20 grid grid-cols-1 justify-items-center md:grid-cols-2 md:justify-items-start lg:grid-cols-3 2xl:grid-col-4 gap-5 p-5">
-            {filteredPosts.map((post, i) => {
+          <div className="grid grid-cols-1 justify-items-center md:grid-cols-2 md:justify-items-start lg:grid-cols-3 2xl:grid-col-4 gap-5 p-5">
+            {posts.map((post, i) => {
               if (i === posts.length - 1) {
                 return (
                   <div key={post.id} ref={ref}>
