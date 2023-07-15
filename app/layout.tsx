@@ -5,8 +5,9 @@ import Container from "@/components/Container";
 import Header from "@/components/header/Header";
 import Sidebar from "@/components/sidebar/Sidebar";
 import SideModal from "@/components/modal/SideModal";
-import ModalProvider from "@/providers/ModalProvider";
 import AuthProvider from "@/providers/AuthProvider";
+import ModalProvider from "@/providers/ModalProvider";
+import QueryProvider from "@/providers/QueryProvider";
 import ToasterProvider from "@/providers/ToasterProvider";
 import { getCurrentUser } from "./actions/getCurrentUser";
 import { getSubscriptions } from "./actions/getSubscriptions";
@@ -36,32 +37,34 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
-        <AuthProvider>
-          <ToasterProvider />
+        <QueryProvider>
+          <AuthProvider>
+            <ToasterProvider />
 
-          <Container>
-            <Header currentUser={currentUser} unseen={unseen} />
+            <Container>
+              <Header currentUser={currentUser} unseen={unseen} />
 
-            <Menubar currentUser={currentUser} />
+              <Menubar currentUser={currentUser} />
 
-            <div className="xl:hidden">
-              <SideModal currentUser={currentUser} channels={channels} />
-            </div>
+              <div className="xl:hidden">
+                <SideModal currentUser={currentUser} channels={channels} />
+              </div>
 
-            <div className="hidden xl:block fixed top-14 h-screen w-[250px] overflow-y-auto">
-              <Sidebar currentUser={currentUser} channels={channels} />
-            </div>
+              <div className="hidden xl:block fixed top-14 h-screen w-[250px] overflow-y-auto">
+                <Sidebar currentUser={currentUser} channels={channels} />
+              </div>
 
-            <ModalProvider
-              currentUser={currentUser}
-              notifications={notifications}
-            />
+              <ModalProvider
+                currentUser={currentUser}
+                notifications={notifications}
+              />
 
-            <main className="w-screen h-screen pt-14 pb-10 sm:pb-0 md:pl-24 xl:pl-[250px] overflow-y-auto">
-              {children}
-            </main>
-          </Container>
-        </AuthProvider>
+              <main className="w-screen h-screen pt-14 pb-10 sm:pb-0 md:pl-24 xl:pl-[250px] overflow-y-auto">
+                {children}
+              </main>
+            </Container>
+          </AuthProvider>
+        </QueryProvider>
       </body>
     </html>
   );
