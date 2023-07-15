@@ -10,5 +10,5 @@ export default async function Subscriptions() {
 
   if (posts.length === 0) return <Empty label="No videos available!" />;
 
-  return <SubsContent currentUser={currentUser} posts={posts} />;
+  return <SubsContent currentUser={currentUser} initialPosts={posts} />;
 }

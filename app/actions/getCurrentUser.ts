@@ -1,5 +1,6 @@
 import prisma from "@/libs/prismadb";
 import { getSession } from "./getSession";
+import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
 
 export const getCurrentUser = async () => {
   try {
@@ -16,17 +17,20 @@ export const getCurrentUser = async () => {
           include: {
             user: true,
           },
+          take: INFINITE_SCROLL_PAGINATION_RESULTS,
         },
         likedPosts: {
           include: {
             user: true,
           },
+          take: INFINITE_SCROLL_PAGINATION_RESULTS,
         },
         dislikedPosts: true,
         watchLaterPosts: {
           include: {
             user: true,
           },
+          take: INFINITE_SCROLL_PAGINATION_RESULTS,
         },
       },
     });

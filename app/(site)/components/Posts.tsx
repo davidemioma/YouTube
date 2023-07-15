@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import Empty from "@/components/Empty";
 import Spinner from "@/components/Spinner";
 import Post from "@/components/posts/Post";
-import { useIntersection } from "@mantine/hooks";
 import { CurrentUser, PostProps } from "@/types";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { INFINITE_SCROLL_PAGINATION_RESULTS } from "@/config";
+import useUnlimitedScrolling from "@/hooks/useUnlimitedScrolling";
 
 interface Props {
   initialPosts: PostProps[];
@@ -16,29 +14,12 @@ interface Props {
 }
 
 const Posts = ({ initialPosts, currentUser }: Props) => {
-  const lastPostRef = useRef<HTMLElement>(null);
-
-  const { ref, entry } = useIntersection({
-    root: lastPostRef.current,
-    threshold: 1,
-  });
-
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["infinite-query-feed"],
-    async ({ pageParam = 1 }) => {
-      const query = `/api/posts/feed?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}&page=${pageParam}`;
-
-      const { data } = await axios.get(query);
-
-      return data as PostProps[];
-    },
-    {
-      getNextPageParam: (_: any, pages: string | any[]) => {
-        return pages.length + 1;
-      },
-      initialData: { pages: [initialPosts], pageParams: [1] },
-    }
-  );
+  const { ref, entry, data, fetchNextPage, isFetchingNextPage } =
+    useUnlimitedScrolling({
+      key: "infinite-query-feed",
+      query: `/api/posts/feed?limit=${INFINITE_SCROLL_PAGINATION_RESULTS}`,
+      initialData: initialPosts,
+    });
 
   //@ts-ignore
   const posts: PostProps[] =
