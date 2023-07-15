@@ -16,5 +16,11 @@ export default async function Results({ searchParams }: Props) {
     return <Empty label="No posts available!" />;
   }
 
-  return <Content posts={posts} currentUser={currentUser} />;
+  return (
+    <Content
+      initialPosts={posts}
+      query={searchParams.search_query}
+      currentUser={currentUser}
+    />
+  );
 }
