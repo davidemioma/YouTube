@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, MouseEventHandler } from "react";
 import Image from "next/image";
 import Moment from "react-moment";
 import { useRouter } from "next/navigation";
@@ -32,6 +32,12 @@ const SavedPost = ({ post, currentUser }: Props) => {
     router.push(`/watch/${post.id}`);
   };
 
+  const onToggle: MouseEventHandler<any> = (e) => {
+    e.stopPropagation();
+
+    setShow((prev) => !prev);
+  };
+
   const watchLaterHandler = () => {
     handleWatchLater();
 
@@ -46,12 +52,9 @@ const SavedPost = ({ post, currentUser }: Props) => {
     <div
       className="group w-full flex gap-2 hover:bg-[hsl(0,0%,18.82%)] p-2 sm:p-3 rounded-lg cursor-pointer transition"
       ref={postRef}
-      onClick={() => show && setShow(false)}
+      onClick={onClickHandler}
     >
-      <div
-        className="relative w-[40%] max-w-[200px] h-28 overflow-hidden rounded-lg"
-        onClick={onClickHandler}
-      >
+      <div className="relative w-[40%] max-w-[200px] h-28 overflow-hidden rounded-lg">
         <Image
           className="object-cover group-hover:scale-105 transition duration-300"
           src={post.photoUrl}
@@ -61,7 +64,7 @@ const SavedPost = ({ post, currentUser }: Props) => {
       </div>
 
       <div className="relative w-[60%] flex-1 flex items-start gap-3 justify-between">
-        <div className="flex flex-col gap-2" onClick={onClickHandler}>
+        <div className="flex flex-col gap-2">
           <span className="font-semibold line-clamp-2">{post.title}</span>
 
           <span className="text-sm font-semibold text-gray-50/70">
@@ -73,7 +76,7 @@ const SavedPost = ({ post, currentUser }: Props) => {
         {currentUser && (
           <RxDotsVertical
             className="cursor-pointer opacity-0 group-hover:opacity-100 flex-shrink-0"
-            onClick={() => setShow((prev) => !prev)}
+            onClick={onToggle}
             size={20}
           />
         )}

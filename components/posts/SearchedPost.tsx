@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, MouseEventHandler } from "react";
 import Image from "next/image";
 import Avatar from "../Avatar";
 import Moment from "react-moment";
@@ -33,6 +33,12 @@ const SearchedPost = ({ post, currentUser }: Props) => {
     router.push(`/watch/${post.id}`);
   };
 
+  const onToggle: MouseEventHandler<any> = (e) => {
+    e.stopPropagation();
+
+    setShow((prev) => !prev);
+  };
+
   const watchLaterHandler = () => {
     handleWatchLater();
 
@@ -47,12 +53,9 @@ const SearchedPost = ({ post, currentUser }: Props) => {
     <div
       className="group flex flex-col md:flex-row gap-5 cursor-pointer"
       ref={postRef}
-      onClick={() => show && setShow(false)}
+      onClick={onClickHandler}
     >
-      <div
-        className="relative w-full md:max-w-xs h-48 overflow-hidden rounded-lg"
-        onClick={onClickHandler}
-      >
+      <div className="relative w-full md:max-w-xs h-48 overflow-hidden rounded-lg">
         <Image
           className="object-cover group-hover:scale-105 transition duration-300"
           src={post.photoUrl}
@@ -62,7 +65,7 @@ const SearchedPost = ({ post, currentUser }: Props) => {
       </div>
 
       <div className="relative flex-1 flex items-start gap-3 justify-between">
-        <div className="flex flex-col" onClick={onClickHandler}>
+        <div className="flex flex-col">
           <span className="font-semibold line-clamp-2 md:line-clamp-1">
             {post.title}
           </span>
@@ -91,7 +94,7 @@ const SearchedPost = ({ post, currentUser }: Props) => {
         {currentUser && (
           <RxDotsVertical
             className="cursor-pointer opacity-0 group-hover:opacity-100 flex-shrink-0"
-            onClick={() => setShow((prev) => !prev)}
+            onClick={onToggle}
             size={20}
           />
         )}

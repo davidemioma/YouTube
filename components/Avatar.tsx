@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import Image from "next/image";
 
 interface Props {
@@ -10,7 +10,9 @@ interface Props {
 }
 
 const Avatar = ({ imgSrc, onClick, small }: Props) => {
-  const onClickHandler = () => {
+  const onClickHandler: MouseEventHandler<HTMLDivElement> = (e) => {
+    e.stopPropagation();
+
     if (onClick) return onClick();
   };
 

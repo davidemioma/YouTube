@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, MouseEventHandler } from "react";
 import Avatar from "../Avatar";
 import Image from "next/image";
 import Moment from "react-moment";
@@ -29,6 +29,12 @@ const Post = ({ post, currentUser }: Props) => {
     post.id
   );
 
+  const onToggle: MouseEventHandler<any> = (e) => {
+    e.stopPropagation();
+
+    setShow((prev) => !prev);
+  };
+
   const onClickHandler = () => {
     router.push(`/watch/${post.id}`);
   };
@@ -47,12 +53,9 @@ const Post = ({ post, currentUser }: Props) => {
     <div
       className="group w-full max-w-sm md:w-full h-[300px] flex flex-col cursor-pointer"
       ref={postRef}
-      onClick={() => show && setShow(false)}
+      onClick={onClickHandler}
     >
-      <div
-        className="relative bg-[hsl(0,0%,18.82%)] w-full h-48 rounded-lg overflow-hidden"
-        onClick={onClickHandler}
-      >
+      <div className="relative bg-[hsl(0,0%,18.82%)] w-full h-48 rounded-lg overflow-hidden">
         <Image
           className="object-cover group-hover:scale-105 transition duration-300"
           src={post.photoUrl}
@@ -68,10 +71,7 @@ const Post = ({ post, currentUser }: Props) => {
             onClick={() => router.push(`/channel/${post.user?.id}`)}
           />
 
-          <div
-            className="flex-1 flex flex-col gap-0.5"
-            onClick={onClickHandler}
-          >
+          <div className="flex-1 flex flex-col gap-0.5">
             <span className="font-semibold line-clamp-2">{post.title}</span>
 
             <span className="text-sm font-semibold text-gray-50/70 hover:text-white">
@@ -88,7 +88,7 @@ const Post = ({ post, currentUser }: Props) => {
         {currentUser && (
           <RxDotsVertical
             className="cursor-pointer opacity-0 group-hover:opacity-100 flex-shrink-0"
-            onClick={() => setShow((prev) => !prev)}
+            onClick={onToggle}
             size={20}
           />
         )}

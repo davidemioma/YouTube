@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, MouseEventHandler } from "react";
 import Image from "next/image";
 import Moment from "react-moment";
 import { useRouter } from "next/navigation";
@@ -32,6 +32,12 @@ const RelatedPost = ({ currentUser, post }: Props) => {
     router.push(`/watch/${post.id}`);
   };
 
+  const onToggle: MouseEventHandler<any> = (e) => {
+    e.stopPropagation();
+
+    setShow((prev) => !prev);
+  };
+
   const watchLaterHandler = () => {
     handleWatchLater();
 
@@ -46,12 +52,9 @@ const RelatedPost = ({ currentUser, post }: Props) => {
     <div
       className="group w-full flex items-start gap-2 cursor-pointer"
       ref={postRef}
-      onClick={() => show && setShow(false)}
+      onClick={onClickHandler}
     >
-      <div
-        className="relative w-[45%] h-24 rounded-lg overflow-hidden"
-        onClick={onClickHandler}
-      >
+      <div className="relative w-[45%] h-24 rounded-lg overflow-hidden">
         <Image
           className="object-cover group-hover:scale-105 transition duration-300"
           src={post.photoUrl}
@@ -61,7 +64,7 @@ const RelatedPost = ({ currentUser, post }: Props) => {
       </div>
 
       <div className="relative w-[55%] flex item-start gap-3 justify-between">
-        <div className="flex flex-col gap-0.5" onClick={onClickHandler}>
+        <div className="flex flex-col gap-0.5">
           <span className="text-sm font-semibold line-clamp-2">
             {post.title}
           </span>
@@ -79,7 +82,7 @@ const RelatedPost = ({ currentUser, post }: Props) => {
         {currentUser && (
           <RxDotsVertical
             className="cursor-pointer opacity-0 group-hover:opacity-100 flex-shrink-0"
-            onClick={() => setShow((prev) => !prev)}
+            onClick={onToggle}
             size={20}
           />
         )}

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, MouseEventHandler } from "react";
 import Image from "next/image";
 import Moment from "react-moment";
 import WatchLater from "../modal/WatchLater";
@@ -32,6 +32,12 @@ const ChannelPost = ({ post, currentUser }: Props) => {
     router.push(`/watch/${post.id}`);
   };
 
+  const onToggle: MouseEventHandler<any> = (e) => {
+    e.stopPropagation();
+
+    setShow((prev) => !prev);
+  };
+
   const watchLaterHandler = () => {
     handleWatchLater();
 
@@ -44,14 +50,11 @@ const ChannelPost = ({ post, currentUser }: Props) => {
 
   return (
     <div
-      className="group flex flex-col gap-2 w-52 h-52"
+      className="group flex flex-col gap-2 w-52 h-52 cursor-pointer"
       ref={postRef}
-      onClick={() => show && setShow(false)}
+      onClick={onClickHandler}
     >
-      <div
-        className="relative w-full h-32 rounded-lg overflow-hidden cursor-pointer"
-        onClick={onClickHandler}
-      >
+      <div className="relative w-full h-32 rounded-lg overflow-hidden">
         <Image
           className="object-cover group-hover:scale-105 transition duration-300"
           src={post.photoUrl}
@@ -61,7 +64,7 @@ const ChannelPost = ({ post, currentUser }: Props) => {
       </div>
 
       <div className="relative flex items-start gap-2 justify-between">
-        <div className="flex flex-col gap-0.5" onClick={onClickHandler}>
+        <div className="flex flex-col gap-0.5">
           <span className="text-sm font-semibold line-clamp-2">
             {post.title}
           </span>
@@ -75,7 +78,7 @@ const ChannelPost = ({ post, currentUser }: Props) => {
         {currentUser && (
           <RxDotsVertical
             className="cursor-pointer opacity-0 group-hover:opacity-100 flex-shrink-0"
-            onClick={() => setShow((prev) => !prev)}
+            onClick={onToggle}
             size={20}
           />
         )}
