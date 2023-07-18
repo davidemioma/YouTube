@@ -19,7 +19,11 @@ const Container = ({ children }: Props) => {
     notificationsModal.isOpen && notificationsModal.onClose();
   };
 
-  return <div onClick={closeAllModals}>{children}</div>;
+  return (
+    <div className="min-h-full" onClick={closeAllModals}>
+      {children}
+    </div>
+  );
 };
 
 export default Container;

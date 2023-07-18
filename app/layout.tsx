@@ -36,7 +36,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={font.className}>
+      <body className={`${font.className} min-h-full`}>
         <AuthProvider>
           <ToasterProvider />
 
