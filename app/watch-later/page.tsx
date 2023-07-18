@@ -12,9 +12,5 @@ export default async function WatchLater() {
     return <Empty label="You have no liked videos!" />;
   }
 
-  return (
-    <div className="w-full h-full">
-      <SavedContent initialPosts={posts} currentUser={currentUser} />
-    </div>
-  );
+  return <SavedContent initialPosts={posts} currentUser={currentUser} />;
 }

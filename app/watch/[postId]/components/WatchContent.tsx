@@ -9,7 +9,6 @@ import { toast } from "react-hot-toast";
 import RelatedPosts from "./RelatedPosts";
 import { useRouter } from "next/navigation";
 import { getRandomPosts } from "@/util/helpers";
-import useInfoModal from "@/hooks/useInfoModal";
 import { CurrentUser, PostDetails, PostProps } from "@/types";
 
 interface Props {
@@ -20,12 +19,6 @@ interface Props {
 
 const WatchContent = ({ currentUser, post, relatedPosts }: Props) => {
   const router = useRouter();
-
-  const infoModal = useInfoModal();
-
-  const closeAllModals = () => {
-    infoModal.isOpen && infoModal.onClose();
-  };
 
   useEffect(() => {
     const viewVideo = async () => {
@@ -47,7 +40,7 @@ const WatchContent = ({ currentUser, post, relatedPosts }: Props) => {
   }, []);
 
   return (
-    <div className="w-full h-full" onClick={closeAllModals}>
+    <>
       <Player videoUrl={post?.videoUrl!} />
 
       <div className="flex flex-col lg:flex-row gap-5 p-5">
@@ -68,7 +61,7 @@ const WatchContent = ({ currentUser, post, relatedPosts }: Props) => {
           <Comments currentUser={currentUser} post={post} />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

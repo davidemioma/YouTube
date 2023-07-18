@@ -14,13 +14,11 @@ export default async function Library() {
   const savedposts = await getWatchLaterPosts();
 
   return (
-    <div className="w-full h-full">
-      <LibraryContent
-        currentUser={currentUser}
-        seenPosts={seenPosts}
-        likedPosts={likedPosts}
-        savedPosts={savedposts}
-      />
-    </div>
+    <LibraryContent
+      currentUser={currentUser}
+      seenPosts={seenPosts}
+      likedPosts={likedPosts}
+      savedPosts={savedposts}
+    />
   );
 }

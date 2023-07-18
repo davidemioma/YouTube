@@ -47,7 +47,7 @@ const ChannelContent = ({ currentUser, channel, posts }: Props) => {
   }
 
   return (
-    <div className="w-full h-full">
+    <>
       <CoverImage channel={channel} currentUser={currentUser} />
 
       <ProfileInfo channel={channel} currentUser={currentUser} />
@@ -73,7 +73,7 @@ const ChannelContent = ({ currentUser, channel, posts }: Props) => {
       </div>
 
       <div className="p-5 pb-10">{content}</div>
-    </div>
+    </>
   );
 };
 

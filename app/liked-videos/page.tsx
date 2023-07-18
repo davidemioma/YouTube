@@ -12,9 +12,5 @@ export default async function LikedVideos() {
     return <Empty label="You have no liked videos!" />;
   }
 
-  return (
-    <div className="w-full h-full">
-      <LikedContent initialPosts={posts} currentUser={currentUser} />
-    </div>
-  );
+  return <LikedContent initialPosts={posts} currentUser={currentUser} />;
 }

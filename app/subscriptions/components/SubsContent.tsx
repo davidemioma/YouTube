@@ -31,7 +31,7 @@ const SubsContent = ({ currentUser, initialPosts }: Props) => {
   }, [entry, fetchNextPage]);
 
   return (
-    <div className="w-full h-full p-5">
+    <div className="p-5">
       <span className="text-lg sm:text-xl font-semibold">Latest</span>
 
       <div className="grid grid-cols-1 justify-items-center md:grid-cols-2 md:justify-items-start lg:grid-cols-3 2xl:grid-col-4 gap-5 py-5">

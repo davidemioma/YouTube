@@ -12,9 +12,5 @@ export default async function History() {
     return <Empty label="You have not watched any videos!" />;
   }
 
-  return (
-    <div className="w-full h-full">
-      <HistoryContent initialPosts={posts} currentUser={currentUser} />
-    </div>
-  );
+  return <HistoryContent initialPosts={posts} currentUser={currentUser} />;
 }
