@@ -47,7 +47,7 @@ const WatchContent = ({ currentUser, post, relatedPosts }: Props) => {
   }, []);
 
   return (
-    <div className="w-full h-full overflow-y-auto" onClick={closeAllModals}>
+    <div className="w-full h-full" onClick={closeAllModals}>
       <Player videoUrl={post?.videoUrl!} />
 
       <div className="flex flex-col lg:flex-row gap-5 p-5">

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Moment from "react-moment";
 import WatchLater from "../modal/WatchLater";
@@ -9,6 +9,7 @@ import { RxDotsVertical } from "react-icons/rx";
 import { numberFormatter } from "@/util/helpers";
 import { CurrentUser, PostProps } from "@/types";
 import useWatchLater from "@/hooks/useWatchLater";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 interface Props {
   post: PostProps;
@@ -19,6 +20,8 @@ const ChannelPost = ({ post, currentUser }: Props) => {
   const router = useRouter();
 
   const [show, setShow] = useState(false);
+
+  const postRef = useRef<HTMLDivElement>(null);
 
   const { hasAdded, loading, handleWatchLater } = useWatchLater(
     currentUser,
@@ -35,9 +38,14 @@ const ChannelPost = ({ post, currentUser }: Props) => {
     setShow(false);
   };
 
+  useOnClickOutside(postRef, () => {
+    setShow(false);
+  });
+
   return (
     <div
       className="group flex flex-col gap-2 w-52 h-52"
+      ref={postRef}
       onClick={() => show && setShow(false)}
     >
       <div

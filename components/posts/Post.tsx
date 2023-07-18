@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Avatar from "../Avatar";
 import Image from "next/image";
 import Moment from "react-moment";
@@ -10,6 +10,7 @@ import { RxDotsVertical } from "react-icons/rx";
 import { numberFormatter } from "@/util/helpers";
 import { CurrentUser, PostProps } from "@/types";
 import useWatchLater from "@/hooks/useWatchLater";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 interface Props {
   post: PostProps;
@@ -20,6 +21,8 @@ const Post = ({ post, currentUser }: Props) => {
   const router = useRouter();
 
   const [show, setShow] = useState(false);
+
+  const postRef = useRef<HTMLDivElement>(null);
 
   const { hasAdded, loading, handleWatchLater } = useWatchLater(
     currentUser,
@@ -36,9 +39,14 @@ const Post = ({ post, currentUser }: Props) => {
     setShow(false);
   };
 
+  useOnClickOutside(postRef, () => {
+    setShow(false);
+  });
+
   return (
     <div
       className="group w-full max-w-sm md:w-full h-[300px] flex flex-col cursor-pointer"
+      ref={postRef}
       onClick={() => show && setShow(false)}
     >
       <div

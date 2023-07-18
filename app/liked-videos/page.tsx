@@ -13,7 +13,7 @@ export default async function LikedVideos() {
   }
 
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="w-full h-full">
       <LikedContent initialPosts={posts} currentUser={currentUser} />
     </div>
   );

@@ -47,7 +47,7 @@ const ChannelContent = ({ currentUser, channel, posts }: Props) => {
   }
 
   return (
-    <div className="w-full h-full overflow-y-auto">
+    <div className="w-full h-full">
       <CoverImage channel={channel} currentUser={currentUser} />
 
       <ProfileInfo channel={channel} currentUser={currentUser} />

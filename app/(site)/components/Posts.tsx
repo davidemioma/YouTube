@@ -32,7 +32,7 @@ const Posts = ({ initialPosts, currentUser }: Props) => {
   }, [entry, fetchNextPage]);
 
   return (
-    <div className="w-full h-full overflow-y-auto">
+    <div className="w-full h-full">
       {posts.length > 0 ? (
         <>
           <div className="grid grid-cols-1 justify-items-center md:grid-cols-2 md:justify-items-start lg:grid-cols-3 2xl:grid-col-4 gap-5 p-5">

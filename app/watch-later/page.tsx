@@ -13,7 +13,7 @@ export default async function WatchLater() {
   }
 
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="w-full h-full">
       <SavedContent initialPosts={posts} currentUser={currentUser} />
     </div>
   );

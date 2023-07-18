@@ -13,7 +13,7 @@ export default async function History() {
   }
 
   return (
-    <div className="w-full h-full overflow-auto">
+    <div className="w-full h-full">
       <HistoryContent initialPosts={posts} currentUser={currentUser} />
     </div>
   );

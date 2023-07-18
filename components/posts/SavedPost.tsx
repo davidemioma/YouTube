@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Moment from "react-moment";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,7 @@ import { RxDotsVertical } from "react-icons/rx";
 import { CurrentUser, PostProps } from "@/types";
 import { numberFormatter } from "@/util/helpers";
 import useWatchLater from "@/hooks/useWatchLater";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 interface Props {
   post: PostProps;
@@ -19,6 +20,8 @@ const SavedPost = ({ post, currentUser }: Props) => {
   const router = useRouter();
 
   const [show, setShow] = useState(false);
+
+  const postRef = useRef<HTMLDivElement>(null);
 
   const { hasAdded, loading, handleWatchLater } = useWatchLater(
     currentUser,
@@ -35,9 +38,14 @@ const SavedPost = ({ post, currentUser }: Props) => {
     setShow(false);
   };
 
+  useOnClickOutside(postRef, () => {
+    setShow(false);
+  });
+
   return (
     <div
       className="group w-full flex gap-2 hover:bg-[hsl(0,0%,18.82%)] p-2 sm:p-3 rounded-lg cursor-pointer transition"
+      ref={postRef}
       onClick={() => show && setShow(false)}
     >
       <div

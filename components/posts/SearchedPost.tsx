@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Avatar from "../Avatar";
 import Moment from "react-moment";
@@ -10,6 +10,7 @@ import { RxDotsVertical } from "react-icons/rx";
 import { CurrentUser, PostProps } from "@/types";
 import { numberFormatter } from "@/util/helpers";
 import useWatchLater from "@/hooks/useWatchLater";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 
 interface Props {
   post: PostProps;
@@ -20,6 +21,8 @@ const SearchedPost = ({ post, currentUser }: Props) => {
   const router = useRouter();
 
   const [show, setShow] = useState(false);
+
+  const postRef = useRef<HTMLDivElement>(null);
 
   const { hasAdded, loading, handleWatchLater } = useWatchLater(
     currentUser,
@@ -36,9 +39,14 @@ const SearchedPost = ({ post, currentUser }: Props) => {
     setShow(false);
   };
 
+  useOnClickOutside(postRef, () => {
+    setShow(false);
+  });
+
   return (
     <div
       className="group flex flex-col md:flex-row gap-5 cursor-pointer"
+      ref={postRef}
       onClick={() => show && setShow(false)}
     >
       <div
