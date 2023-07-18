@@ -25,7 +25,7 @@ const Container = ({ children }: Props) => {
   };
 
   return (
-    <div className="min-h-full overflow-y-auto" onClick={closeAllModals}>
+    <div className="min-h-full overflow-y-scroll" onClick={closeAllModals}>
       {children}
     </div>
   );

@@ -40,10 +40,10 @@ export default async function RootLayout({
         <AuthProvider>
           <ToasterProvider />
 
-          <Header currentUser={currentUser} unseen={unseen} />
-
           <QueryProvider>
             <Container>
+              <Header currentUser={currentUser} unseen={unseen} />
+
               <Menubar currentUser={currentUser} />
 
               <div className="xl:hidden">
