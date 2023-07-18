@@ -24,7 +24,11 @@ const Container = ({ children }: Props) => {
     infoModal.isOpen && infoModal.onClose();
   };
 
-  return <div onClick={closeAllModals}>{children}</div>;
+  return (
+    <div className="min-h-full overflow-y-auto" onClick={closeAllModals}>
+      {children}
+    </div>
+  );
 };
 
 export default Container;
