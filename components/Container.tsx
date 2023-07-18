@@ -20,7 +20,7 @@ const Container = ({ children }: Props) => {
   };
 
   return (
-    <div className="min-h-full" onClick={closeAllModals}>
+    <div className="min-h-full overflow-y-auto" onClick={closeAllModals}>
       {children}
     </div>
   );
