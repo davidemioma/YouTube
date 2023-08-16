@@ -1,11 +1,11 @@
 "use client";
 
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import { AiOutlineClockCircle } from "react-icons/ai";
 
 interface Props {
   disabled?: boolean;
-  onClick: () => void;
+  onClick: MouseEventHandler<any>;
   label: string;
 }
 

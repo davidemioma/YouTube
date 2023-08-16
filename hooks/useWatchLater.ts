@@ -20,7 +20,7 @@ const useWatchLater = (currentUser: CurrentUser | null, postId: string) => {
       currentUser?.watchLaterPosts.findIndex((post) => post.id === postId) !==
         -1
     );
-  }, [currentUser]);
+  }, [currentUser, postId]);
 
   const handleWatchLater = () => {
     setLoading(true);
@@ -31,9 +31,9 @@ const useWatchLater = (currentUser: CurrentUser | null, postId: string) => {
         postId,
       })
       .then(() => {
-        toast.success(message);
-
         router.refresh();
+
+        toast.success(message);
       })
       .catch((err) => {
         toast.error("Something went wrong");

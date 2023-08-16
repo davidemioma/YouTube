@@ -39,7 +39,9 @@ const Post = ({ post, currentUser }: Props) => {
     router.push(`/watch/${post.id}`);
   };
 
-  const watchLaterHandler = () => {
+  const watchLaterHandler: MouseEventHandler<any> = (e) => {
+    e.stopPropagation();
+
     handleWatchLater();
 
     setShow(false);

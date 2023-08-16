@@ -38,7 +38,9 @@ const ChannelPost = ({ post, currentUser }: Props) => {
     setShow((prev) => !prev);
   };
 
-  const watchLaterHandler = () => {
+  const watchLaterHandler: MouseEventHandler<any> = (e) => {
+    e.stopPropagation();
+
     handleWatchLater();
 
     setShow(false);
